@@ -29,7 +29,7 @@ describe('Phase 1 landing page', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /your care story/i,
+        name: /your AI companion for clearer care/i,
       }),
     ).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'See how it works' })).toHaveAttribute(

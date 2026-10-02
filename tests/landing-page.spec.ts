@@ -5,7 +5,7 @@ test('the public landing page supports its primary interactions', async ({ page 
 
   await expect(page).toHaveTitle('Vein Health - verified information, understandable care')
   await expect(
-    page.getByRole('heading', { level: 1, name: /Your care story, clearer between visits/i }),
+    page.getByRole('heading', { level: 1, name: /Your AI companion for clearer care/i }),
   ).toBeVisible()
   await expect(page.getByRole('link', { name: 'See how it works' })).toHaveAttribute(
     'href',

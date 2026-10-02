@@ -7,8 +7,8 @@ Last updated: 2026-10-02
 - Path: `C:\Users\Divergent\Documents\AI_LOCKIN\MVP\vein-health\frontend`
 - Git repository: yes, independent from the backend
 - Branch: `main`
-- Remote: none configured
-- Commits: none created
+- Remote: `origin` -> `https://github.com/Vein-Health/vein-health-frontend.git`
+- Commits: local project history initialized for the organization repository
 - Sibling backend: `..\backend`
 
 The parent `vein-health` folder is a coordination directory, not a Git repository. No branch or directory is named for an implementation tool or agent. No `prompts` folder exists.

@@ -40,15 +40,14 @@ export function HeroSection() {
         <div aria-hidden="true" className="hero__wash" />
         <ContourField className="hero__contours" />
         <div className="hero__content">
-          <p className="eyebrow eyebrow--light">Your continuity-of-care companion</p>
+          <p className="eyebrow eyebrow--light">Your AI continuity-of-care companion</p>
           <h1 id="hero-heading">
-            Your care story,
-            <span> clearer between visits.</span>
+            Your AI companion{' '}
+            <span>for clearer care.</span>
           </h1>
           <p className="hero__lede">
-            Health information can arrive scattered and hard to follow. Vein
-            Health is being built to help you verify the details, understand
-            what they say, and keep your care journey in one place.
+            Vein Health helps you verify health documents, understand the
+            details, and keep your care organized between visits.
           </p>
           <div className="button-row">
             <a className="button button--primary" href="#how-it-works">
@@ -74,4 +73,3 @@ export function HeroSection() {
     </>
   )
 }
-
