@@ -2,6 +2,7 @@ import * as Accordion from '@radix-ui/react-accordion'
 import { Check, FileText, LineChart, Plus, ShieldCheck } from 'lucide-react'
 
 import { MascotMoment } from './mascot-moment'
+import { ContourField } from './contour-field'
 
 interface InlineQuestion {
   answer: string
@@ -14,13 +15,13 @@ const verificationQuestions: readonly InlineQuestion[] = [
     id: 'wrong-detail',
     question: 'What happens if something is wrong?',
     answer:
-      'The planned review flow keeps uncertain fields visible so a patient can correct, reject, retake, or flag them before anything safety-critical is used.',
+      'The detail stays marked for review. You can compare it with the document, correct it, reject it, or take a clearer photo before it is used for anything important.',
   },
   {
     id: 'invent-data',
     question: 'Does Vein Health ever fill in missing medication data?',
     answer:
-      'No. Missing dose, route, frequency, duration, and dates must remain missing until verified source information supplies them.',
+      'No. A missing dose, route, frequency, duration, or date stays missing until it is found in a trusted source and checked.',
   },
 ]
 
@@ -29,13 +30,13 @@ const understandingQuestions: readonly InlineQuestion[] = [
     id: 'doctor-boundary',
     question: 'Does it replace my doctor?',
     answer:
-      'No. The product is designed to help patients continue care after a consultation, not diagnose, prescribe, or replace a clinician.',
+      'No. It helps you understand and keep track of information after a visit. A qualified clinician or pharmacist still makes medical decisions.',
   },
   {
     id: 'emergency-boundary',
     question: 'What about emergency situations?',
     answer:
-      'The future product may present conservative, deterministic escalation guidance. It is not an emergency service, and the exact jurisdiction-aware language still requires approval.',
+      'Vein Health is not an emergency service. If you think you may be in danger, contact your local emergency service or seek urgent professional care instead of waiting for the app.',
   },
 ]
 
@@ -62,6 +63,7 @@ function QuestionList({ items }: { items: readonly InlineQuestion[] }) {
 export function WorkflowSection() {
   return (
     <section aria-labelledby="workflow-heading" className="workflow section" id="how-it-works">
+      <ContourField className="section-contours section-contours--workflow" />
       <div className="section-heading section-heading--split">
         <div>
           <p className="eyebrow">How it works</p>
@@ -71,7 +73,7 @@ export function WorkflowSection() {
             reviewed and can understand.
           </p>
         </div>
-        <MascotMoment cloud="Let’s take it one step at a time" state="intro" />
+        <MascotMoment cloud="One clear step at a time." state="intro" />
       </div>
 
       <article className="story story--media-first">
@@ -96,15 +98,14 @@ export function WorkflowSection() {
           <h3>I upload my documents</h3>
           <p>
             Prescriptions, lab results, and discharge notes often live in
-            different places. The planned product will accept a photo or PDF,
-            then present candidate details for review - not as unquestioned
-            truth.
+            different places. Add a photo or PDF and review every extracted
+            detail beside its source before it becomes part of your record.
           </p>
           <ul className="story__points">
             <li><Check aria-hidden="true" /> Photo and PDF direction</li>
             <li><Check aria-hidden="true" /> Source-aware extraction preview</li>
           </ul>
-          <MascotMoment cloud="Document + source graph" state="upload" />
+          <MascotMoment cloud="Your document stays the source." state="upload" />
         </div>
       </article>
 
@@ -118,7 +119,7 @@ export function WorkflowSection() {
             unverified extraction.
           </p>
           <QuestionList items={verificationQuestions} />
-          <MascotMoment cloud="Verify against the source" state="verify" />
+          <MascotMoment cloud="Check it before you trust it." state="verify" />
         </div>
         <div className="story__media">
           <picture>
@@ -163,15 +164,14 @@ export function WorkflowSection() {
           <span className="step-number">03</span>
           <h3>I understand my care</h3>
           <p>
-            Plain-language explanations can help make verified instructions
+            Plain-language explanations help make verified instructions
             easier to discuss with a clinician, pharmacist, or family member.
             They do not create a diagnosis or change treatment.
           </p>
           <QuestionList items={understandingQuestions} />
-          <MascotMoment cloud="Clear, careful, source-grounded" state="understand" />
+          <MascotMoment cloud="Clear words. Same medical facts." state="understand" />
         </div>
       </article>
     </section>
   )
 }
-

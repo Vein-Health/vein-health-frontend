@@ -5,17 +5,18 @@ test('the public landing page supports its primary interactions', async ({ page 
 
   await expect(page).toHaveTitle('Vein Health - verified information, understandable care')
   await expect(
-    page.getByRole('heading', { level: 1, name: /Your AI companion for clearer care/i }),
+    page.getByRole('heading', { level: 1, name: /Meet your AI companion for clearer care/i }),
   ).toBeVisible()
-  await expect(page.getByRole('link', { name: 'See how it works' })).toHaveAttribute(
+  await expect(page.locator('#top').getByRole('link', { name: 'Get Started' })).toHaveAttribute(
     'href',
     '#how-it-works',
   )
   await expect(page.getByRole('button', { name: 'Login' })).toBeDisabled()
 
   const activeSlide = page.locator('.feature-carousel__slide[aria-hidden="false"]')
+  await page.getByRole('button', { name: 'Show feature pair 1' }).click()
   await expect(activeSlide).toContainText('Document scanning')
-  await page.getByRole('button', { name: 'Show next feature pair' }).click()
+  await page.getByRole('button', { name: 'Show feature pair 2' }).click()
   await expect(activeSlide).toContainText('Plain-language explanations')
   await expect(page.getByRole('button', { name: 'Show feature pair 2' })).toHaveAttribute(
     'aria-pressed',
@@ -27,7 +28,7 @@ test('the public landing page supports its primary interactions', async ({ page 
   await expect(page.getByText('$203.90 billed yearly · save $35.98')).toBeVisible()
 
   await page.getByRole('button', { name: 'What is Vein Health?' }).click()
-  await expect(page.getByText(/continuity-of-care software for organizing/i)).toBeVisible()
+  await expect(page.getByText(/helps you keep the health information/i)).toBeVisible()
 
   await page.evaluate(() => window.scrollTo(0, 500))
   await expect(page.locator('.public-header')).toHaveAttribute('data-scrolled', 'true')
@@ -60,8 +61,24 @@ test('reduced-motion preference produces a static component state', async ({ pag
   await page.goto('/')
 
   await expect(page.locator('.features')).toHaveClass(/features--reduced-motion/)
-  await expect(page.locator('.mascot-moment').first()).toHaveAttribute(
+  await expect(page.locator('.companion-guide')).toHaveAttribute(
     'data-reduced-motion',
     'true',
   )
+})
+
+test('public legal pages are reachable from the footer', async ({ page }) => {
+  await page.goto('/')
+
+  const routes = [
+    ['/privacy', 'Privacy Policy'],
+    ['/terms', 'Terms and Conditions'],
+    ['/cookies', 'Cookie Policy'],
+  ] as const
+
+  for (const [route, heading] of routes) {
+    await page.goto(route)
+    await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Vein Health home' })).toHaveAttribute('href', '/')
+  }
 })

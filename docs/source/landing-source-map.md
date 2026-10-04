@@ -37,6 +37,7 @@ This folder is a design/reference drop, not the application repository. Preserve
 | `Smiling Man Using Smartphone at Home.png` | Feature/verification lifestyle visual | Supplied visual asset |
 | `Smiling Woman Scanning a Document.png` | Upload/scanning lifestyle visual | Supplied visual asset |
 | `mascot.png` | Small Vein Health mascot/icon | Supplied visual asset |
+| `new dashboard image/Screenshot 2026-10-03 005151.png` | Owner-supplied dashboard to replace the synthetic organized-care preview | Public marketing-preview authority; not authorization to build authenticated dashboard behavior |
 
 ## Design reading order to verify in the builder
 
@@ -77,7 +78,7 @@ The four new screenshots complete a four-state, two-card carousel. The visible c
 
 ## What the builder must not infer
 
-- The product screenshot is not authorization to build the dashboard during the landing phase.
+- The owner-supplied dashboard screenshot authorizes the public preview image only; it is not authorization to implement authenticated dashboard behavior.
 - Pricing shown in a reference is not automatically approved production pricing.
 - FAQ wording must be transcribed from the reference and checked for safety/legal claims.
 - The landing page must not promise diagnosis, prescribing, guaranteed outcomes, emergency treatment, or clinician replacement.

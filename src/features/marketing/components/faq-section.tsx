@@ -3,20 +3,22 @@ import { Plus } from 'lucide-react'
 
 import { faqGroups } from '../data'
 import { MascotMoment } from './mascot-moment'
+import { ContourField } from './contour-field'
 
 export function FaqSection() {
   return (
     <section aria-labelledby="faq-heading" className="faq section" id="faq">
+      <ContourField className="section-contours section-contours--faq" />
       <div className="faq__intro">
         <div className="section-heading">
           <p className="eyebrow">Questions, answered carefully</p>
           <h2 id="faq-heading">Common questions</h2>
           <p>
-            Clear boundaries now, before authentication, uploads, or care
-            workflows are built.
+            Straight answers about how Vein Health handles your care, your
+            information, and the limits of an AI companion.
           </p>
         </div>
-        <MascotMoment cloud="A good question deserves a clear answer" state="faq" />
+        <MascotMoment cloud="No health question is silly." state="faq" />
       </div>
 
       <Accordion.Root className="faq-accordion" collapsible type="single">
@@ -42,4 +44,3 @@ export function FaqSection() {
     </section>
   )
 }
-

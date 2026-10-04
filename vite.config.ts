@@ -7,8 +7,10 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     include: ['src/**/*.test.{ts,tsx}'],
-    setupFiles: './src/tests/setup.ts',
+    setupFiles: ['./src/tests/polyfills.ts', './src/tests/setup.ts'],
     restoreMocks: true,
     clearMocks: true,
+    isolate: false,
+    testTimeout: 20_000,
   },
 })

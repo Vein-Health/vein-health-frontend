@@ -37,6 +37,7 @@ export function PublicHeader() {
         <a
           aria-label="Vein Health home"
           className="brand-lockup"
+          data-companion-origin
           href="#top"
           onClick={() => setIsMenuOpen(false)}
         >
@@ -96,4 +97,3 @@ export function PublicHeader() {
     </header>
   )
 }
-

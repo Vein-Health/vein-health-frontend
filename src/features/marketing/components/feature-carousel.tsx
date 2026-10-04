@@ -7,13 +7,14 @@ import {
   ShieldAlert,
   ShieldCheck,
 } from 'lucide-react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react'
 
 import { featureCarouselStates } from '../data'
 import type { FeatureCardData, FeatureVisual } from '../types'
 import { usePrefersReducedMotion } from '../hooks/use-prefers-reduced-motion'
 import { MascotMoment } from './mascot-moment'
+import { ContourField } from './contour-field'
 
 function FeatureVisualMock({ type }: { type: FeatureVisual }) {
   if (type === 'capture') {
@@ -100,7 +101,7 @@ function FeatureCard({ card }: { card: FeatureCardData }) {
   return (
     <article className="feature-card">
       <div className="feature-card__visual">
-        <span className="preview-chip preview-chip--floating">PLANNED PREVIEW</span>
+        <span className="preview-chip preview-chip--floating">PRODUCT PREVIEW</span>
         <FeatureVisualMock type={card.visual} />
       </div>
       <div className="feature-card__body">
@@ -142,6 +143,18 @@ export function FeatureCarousel() {
     showState(activeIndex + (distance < 0 ? 1 : -1))
   }
 
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      return
+    }
+
+    const timer = window.setInterval(() => {
+      setActiveIndex((index) => (index + 1) % featureCarouselStates.length)
+    }, 2500)
+
+    return () => window.clearInterval(timer)
+  }, [prefersReducedMotion])
+
   return (
     <section
       aria-labelledby="features-heading"
@@ -149,12 +162,13 @@ export function FeatureCarousel() {
       className={`features section${prefersReducedMotion ? ' features--reduced-motion' : ''}`}
       id="features"
     >
+      <ContourField className="section-contours section-contours--features" />
       <div className="feature-carousel__header">
         <div className="section-heading">
           <p className="eyebrow eyebrow--pill">Features</p>
           <h2 id="features-heading">Everything your care needs</h2>
           <p>
-            Small, source-aware tools planned to make health information easier
+            Small, source-aware tools built to make health information easier
             to verify, understand, and keep in view.
           </p>
         </div>
@@ -197,6 +211,7 @@ export function FeatureCarousel() {
             <div
               aria-hidden={stateIndex !== activeIndex}
               className="feature-carousel__slide"
+              data-active={stateIndex === activeIndex ? 'true' : 'false'}
               key={state.id}
             >
               {state.cards.map((card) => <FeatureCard card={card} key={card.id} />)}

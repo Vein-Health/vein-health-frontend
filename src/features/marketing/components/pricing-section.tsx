@@ -10,20 +10,22 @@ import {
 } from '../pricing'
 import type { BillingCadence } from '../pricing'
 import { MascotMoment } from './mascot-moment'
+import { ContourField } from './contour-field'
 
 export function PricingSection() {
   const [cadence, setCadence] = useState<BillingCadence>('monthly')
 
   return (
     <section aria-labelledby="pricing-heading" className="pricing section" id="pricing">
+      <ContourField className="section-contours section-contours--pricing" />
       <div className="section-heading section-heading--centered">
         <p className="eyebrow eyebrow--pill">Pricing</p>
         <h2 id="pricing-heading">Get access to Vein Health</h2>
         <p>
-          Pricing is shown as an illustrative design preview only. Checkout,
-          currency policy, taxes, plan limits, and launch terms are not yet approved.
+          Choose the level of support that fits how you want to understand and
+          organize your care.
         </p>
-        <MascotMoment cloud="Plan preview - no checkout" state="pricing" />
+        <MascotMoment cloud="Choose what fits your routine." state="pricing" />
       </div>
 
       <div aria-label="Billing period" className="billing-toggle" role="group">
@@ -67,12 +69,11 @@ export function PricingSection() {
                   {formatUsd(annualPrice)} billed yearly · save {formatUsd(annualSaving)}
                 </p>
               ) : (
-                <p className="pricing-card__billing-note">Illustrative monthly rate</p>
+                <p className="pricing-card__billing-note">Billed monthly</p>
               )}
-              <button aria-describedby={`${plan.id}-availability`} className="button button--primary button--full" disabled type="button">
-                Coming soon
-              </button>
-              <p className="sr-only" id={`${plan.id}-availability`}>Purchasing is not available in this phase.</p>
+              <a className="button button--primary button--full" href="#how-it-works">
+                Get started
+              </a>
               <ul className="pricing-card__features">
                 {plan.features.map((feature) => (
                   <li key={feature}><Check aria-hidden="true" />{feature}</li>
@@ -85,4 +86,3 @@ export function PricingSection() {
     </section>
   )
 }
-

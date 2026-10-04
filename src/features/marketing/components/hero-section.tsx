@@ -1,12 +1,10 @@
 import {
-  ArrowDown,
+  ArrowRight,
   CheckCircle2,
   HeartHandshake,
   ScanLine,
   ShieldCheck,
 } from 'lucide-react'
-
-import { ContourField } from './contour-field'
 
 const trustItems = [
   { icon: ScanLine, label: 'Source-linked information' },
@@ -38,27 +36,26 @@ export function HeroSection() {
           />
         </picture>
         <div aria-hidden="true" className="hero__wash" />
-        <ContourField className="hero__contours" />
         <div className="hero__content">
-          <p className="eyebrow eyebrow--light">Your AI continuity-of-care companion</p>
+          <p className="eyebrow eyebrow--light">Care does not stop when the appointment ends</p>
           <h1 id="hero-heading">
-            Your AI companion{' '}
+            Meet your AI companion{' '}
             <span>for clearer care.</span>
           </h1>
           <p className="hero__lede">
-            Vein Health helps you verify health documents, understand the
-            details, and keep your care organized between visits.
+            Upload a prescription, lab result, or discharge note. Vein Health
+            helps you verify the facts, understand them in plain language, and
+            keep the next step close.
           </p>
           <div className="button-row">
             <a className="button button--primary" href="#how-it-works">
-              See how it works
-              <ArrowDown aria-hidden="true" size={18} />
+              Get Started
+              <ArrowRight aria-hidden="true" size={18} />
             </a>
             <a className="button button--glass" href="#how-it-works">
               Learn more
             </a>
           </div>
-          <p className="hero__status">Public preview - no document upload on this page</p>
         </div>
       </section>
 

@@ -6,6 +6,11 @@ import {
 } from '@tanstack/react-router'
 
 import { LandingPage } from '../../features/marketing'
+import {
+  CookiesPage,
+  PrivacyPage,
+  TermsPage,
+} from '../../features/marketing/legal-page'
 
 const rootRoute = createRootRoute({
   component: Outlet,
@@ -17,7 +22,30 @@ const indexRoute = createRoute({
   component: LandingPage,
 })
 
-const routeTree = rootRoute.addChildren([indexRoute])
+const privacyRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/privacy',
+  component: PrivacyPage,
+})
+
+const termsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/terms',
+  component: TermsPage,
+})
+
+const cookiesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/cookies',
+  component: CookiesPage,
+})
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  privacyRoute,
+  termsRoute,
+  cookiesRoute,
+])
 
 export const router = createRouter({ routeTree })
 
