@@ -1,13 +1,24 @@
-import { Apple } from 'lucide-react'
-
 import { navigationItems } from '../data'
 import { BrandMark } from './mascot-moment'
 
 const legalLinks = [
   { href: '/privacy', label: 'Privacy' },
   { href: '/terms', label: 'Terms' },
+  { href: '/privacy#information', label: 'Health Data Policy' },
+  { href: '/privacy#ai', label: 'AI Safety' },
   { href: '/cookies', label: 'Cookies' },
 ] as const
+
+function AppleStoreMark() {
+  return (
+    <svg aria-hidden="true" className="apple-store-mark" viewBox="0 0 24 24">
+      <path
+        d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53-1.71-2.47-3.02-7.02-1.27-10.08.87-1.52 2.44-2.48 4.13-2.51 1.29-.02 2.53.87 3.31.87s2.24-1.07 3.78-.91c.64.03 2.44.26 3.59 1.77-.11.07-2.15 1.26-2.12 3.76.03 2.99 2.62 3.98 2.65 3.99-.03.07-.41 1.39-1.32 3.14ZM13 3.5C13.73 2.67 14.94 2.04 16 2c.14 1.17-.34 2.35-1.04 3.19-.69.85-1.84 1.51-2.96 1.42-.16-1.15.41-2.35 1-3.11Z"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}
 
 function GooglePlayMark() {
   return (
@@ -48,7 +59,7 @@ export function FinalSection() {
             <span className="store-area__label">Mobile apps coming soon</span>
             <div className="store-badges" aria-label="Planned Vein Health mobile applications">
               <span className="store-badge">
-                <Apple aria-hidden="true" strokeWidth={2.1} />
+                <AppleStoreMark />
                 <span><small>COMING SOON TO THE</small><strong>App Store</strong></span>
               </span>
               <span className="store-badge">
@@ -63,24 +74,32 @@ export function FinalSection() {
           <div>
             <h3>Explore</h3>
             {navigationItems.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}
+            <span aria-label="Blog — coming soon" className="footer-link--pending">Blog</span>
           </div>
           <div>
             <h3>Support</h3>
-            <a href="#how-it-works">Using documents</a>
-            <a href="#features">Care tools</a>
-            <a href="#faq">Common questions</a>
+            <a href="#features">Medications</a>
+            <a href="#features">Reminders</a>
+            <a href="#features">Example summary</a>
+            <span aria-label="Contact — coming soon" className="footer-link--pending">Contact</span>
           </div>
           <div>
-            <h3>Important</h3>
-            <p>
-              Vein Health supports continuity of care. It does not diagnose,
-              prescribe, change treatment, or replace a clinician.
-            </p>
+            <h3>Connect</h3>
+            <span aria-label="Instagram — profile coming soon" className="footer-link--pending">Instagram</span>
+            <span aria-label="LinkedIn — profile coming soon" className="footer-link--pending">LinkedIn</span>
+            <span aria-label="X, formerly Twitter — profile coming soon" className="footer-link--pending">X (Twitter)</span>
           </div>
         </div>
 
         <div className="public-footer__bottom">
-          <p>© {currentYear} Vein Health. In an emergency, contact your local emergency service.</p>
+          <div>
+            <p>© {currentYear} Vein Health</p>
+            <p className="public-footer__disclaimer">
+              Vein Health supports continuity of care. It does not diagnose,
+              prescribe, change treatment, or replace a clinician. In an
+              emergency, contact your local emergency service.
+            </p>
+          </div>
           <nav aria-label="Legal information" className="public-footer__legal">
             {legalLinks.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}
           </nav>

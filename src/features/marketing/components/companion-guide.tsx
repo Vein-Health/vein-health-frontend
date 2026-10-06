@@ -10,7 +10,7 @@ interface CompanionMessage {
 }
 
 const firstMessage: CompanionMessage = {
-  cloud: 'One clear step at a time.',
+  cloud: 'Let\u2019s start with your original health document.',
   state: 'intro',
 }
 
@@ -42,8 +42,11 @@ export function CompanionGuide() {
   const [isVisible, setIsVisible] = useState(false)
   const guideRef = useRef<HTMLElement>(null)
   const avatarRef = useRef<HTMLDivElement>(null)
-  const firstArrivalRef = useRef(false)
+  const [arrivalSequence, setArrivalSequence] = useState(0)
+  const [hasLanded, setHasLanded] = useState(false)
   const idleTimerRef = useRef<number | null>(null)
+  const landingTimerRef = useRef<number | null>(null)
+  const firstArrivalRef = useRef(true)
   const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
@@ -56,6 +59,18 @@ export function CompanionGuide() {
     }
 
     const settleAtSection = () => {
+      const viewportAnchor = window.innerHeight * 0.52
+      const isInsideQuietZone = ['.hero', '.pricing', '.closing'].some((selector) => {
+        const zone = document.querySelector<HTMLElement>(selector)
+        const rect = zone?.getBoundingClientRect()
+        return Boolean(rect && rect.top <= viewportAnchor && rect.bottom >= viewportAnchor)
+      })
+
+      if (isInsideQuietZone) {
+        setIsVisible(false)
+        return
+      }
+
       const selected = getClosestVisibleMarker(markers)
 
       if (!selected) {
@@ -68,7 +83,9 @@ export function CompanionGuide() {
         state: (selected.dataset.companionState ?? firstMessage.state) as MascotState,
       })
       setIsCloudOpen(true)
+      setHasLanded(prefersReducedMotion)
       setIsVisible(true)
+      setArrivalSequence((sequence) => sequence + 1)
     }
 
     const onScroll = () => {
@@ -76,7 +93,8 @@ export function CompanionGuide() {
       if (idleTimerRef.current !== null) {
         window.clearTimeout(idleTimerRef.current)
       }
-      idleTimerRef.current = window.setTimeout(settleAtSection, 190)
+      setHasLanded(false)
+      idleTimerRef.current = window.setTimeout(settleAtSection, 240)
     }
 
     settleAtSection()
@@ -89,47 +107,70 @@ export function CompanionGuide() {
       if (idleTimerRef.current !== null) {
         window.clearTimeout(idleTimerRef.current)
       }
+      if (landingTimerRef.current !== null) {
+        window.clearTimeout(landingTimerRef.current)
+      }
     }
-  }, [])
+  }, [prefersReducedMotion])
 
   useEffect(() => {
-    if (!isVisible || firstArrivalRef.current) {
+    if (!isVisible || arrivalSequence === 0) {
       return
     }
 
-    firstArrivalRef.current = true
-
     if (prefersReducedMotion) {
-      return
+      landingTimerRef.current = window.setTimeout(() => setHasLanded(true), 0)
+      return () => {
+        if (landingTimerRef.current !== null) {
+          window.clearTimeout(landingTimerRef.current)
+        }
+      }
     }
 
     const guide = guideRef.current
+    const button = guide?.querySelector<HTMLElement>('.companion-guide__button')
     const origin = document.querySelector<HTMLElement>('[data-companion-origin] .brand-mark')
 
-    if (!guide || !origin) {
+    if (!guide || !button) {
       return
     }
 
     const guideRect = guide.getBoundingClientRect()
-    const originRect = origin.getBoundingClientRect()
-    const offsetX = originRect.left + originRect.width / 2 - (guideRect.left + guideRect.width / 2)
-    const offsetY = originRect.top + originRect.height / 2 - (guideRect.top + guideRect.height / 2)
+    const originRect = origin?.getBoundingClientRect()
+    const startsAtLogo = firstArrivalRef.current && originRect
+    const offsetX = startsAtLogo
+      ? originRect.left + originRect.width / 2 - (guideRect.left + guideRect.width / 2)
+      : message.state === 'upload' || message.state === 'understand' ? -72 : 72
+    const offsetY = startsAtLogo
+      ? originRect.top + originRect.height / 2 - (guideRect.top + guideRect.height / 2)
+      : -118
+    const duration = startsAtLogo ? 1250 : 980
 
-    guide.animate(
+    firstArrivalRef.current = false
+    button.getAnimations().forEach((animation) => animation.cancel())
+    button.animate(
       [
-        { opacity: 0, transform: `translate(${offsetX}px, ${offsetY}px) scale(.22)` },
-        { opacity: 1, offset: 0.58, transform: `translate(${offsetX * 0.42}px, ${offsetY * 0.42 - 34}px) scale(.68)` },
-        { opacity: 1, offset: 0.86, transform: 'translate(0, 6px) scale(1.02)' },
-        { opacity: 1, transform: 'translate(0, 0) scale(1)' },
+        { transform: `translate(${offsetX}px, ${offsetY}px) rotate(-7deg) scale(.72)` },
+        { offset: 0.52, transform: 'translate(0, -28px) rotate(3deg) scale(.97)' },
+        { offset: 0.68, transform: 'translate(0, 12px) rotate(0) scaleX(1.13) scaleY(.82)' },
+        { offset: 0.82, transform: 'translate(0, -24px) rotate(-2deg) scaleX(.96) scaleY(1.07)' },
+        { offset: 0.93, transform: 'translate(0, 5px) rotate(1deg) scaleX(1.04) scaleY(.96)' },
+        { transform: 'translate(0, 0) rotate(0) scale(1)' },
       ],
-      { duration: 760, easing: 'cubic-bezier(.22,.82,.28,1)' },
+      { duration, easing: 'cubic-bezier(.2,.76,.24,1)', fill: 'both' },
     )
-  }, [isVisible, prefersReducedMotion])
+
+    if (landingTimerRef.current !== null) {
+      window.clearTimeout(landingTimerRef.current)
+    }
+    landingTimerRef.current = window.setTimeout(() => setHasLanded(true), duration - 120)
+  }, [arrivalSequence, isVisible, message.state, prefersReducedMotion])
 
   return (
     <aside
       className="companion-guide"
       data-cloud-open={isCloudOpen ? 'true' : 'false'}
+      data-landed={hasLanded ? 'true' : 'false'}
       data-reduced-motion={prefersReducedMotion ? 'true' : 'false'}
       data-state={message.state}
       data-visible={isVisible ? 'true' : 'false'}
@@ -143,7 +184,13 @@ export function CompanionGuide() {
         tabIndex={isVisible ? 0 : -1}
         type="button"
       >
-        <span className="companion-guide__cloud">{message.cloud}</span>
+        <span className="companion-guide__cloud">
+          <svg aria-hidden="true" className="companion-guide__cloud-shape" preserveAspectRatio="none" viewBox="0 0 240 112">
+            <path d="M46 99C21 99 6 84 6 64c0-18 13-32 33-35C47 12 63 3 82 7c10-5 23-7 35-4 15 3 27 13 33 26 8-7 19-11 31-9 19 3 31 17 31 34 14 5 22 17 22 31 0 18-15 27-35 27H46Z" />
+          </svg>
+          <span className="companion-guide__cloud-text">{message.cloud}</span>
+          <span aria-hidden="true" className="companion-guide__cloud-trail"><i /><i /></span>
+        </span>
         <CompanionAvatar
           className="companion-guide__avatar"
           containerRef={avatarRef}

@@ -3,12 +3,10 @@ import { Plus } from 'lucide-react'
 
 import { faqGroups } from '../data'
 import { MascotMoment } from './mascot-moment'
-import { ContourField } from './contour-field'
 
 export function FaqSection() {
   return (
     <section aria-labelledby="faq-heading" className="faq section" id="faq">
-      <ContourField className="section-contours section-contours--faq" />
       <div className="faq__intro">
         <div className="section-heading">
           <p className="eyebrow">Questions, answered carefully</p>
@@ -18,7 +16,10 @@ export function FaqSection() {
             information, and the limits of an AI companion.
           </p>
         </div>
-        <MascotMoment cloud="No health question is silly." state="faq" />
+        <MascotMoment
+          cloud="Tap a question for a simple answer."
+          state="faq"
+        />
       </div>
 
       <Accordion.Root className="faq-accordion" collapsible type="single">

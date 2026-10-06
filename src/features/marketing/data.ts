@@ -15,7 +15,7 @@ export const navigationItems: readonly NavigationItem[] = [
 export const featureCarouselStates: readonly FeatureCarouselState[] = [
   {
     id: 'capture-and-verify',
-    mascotCloud: 'Start with the source.',
+    mascotCloud: 'A clear photo makes every detail easier to check.',
     cards: [
       {
         id: 'document-scanning',
@@ -39,7 +39,7 @@ export const featureCarouselStates: readonly FeatureCarouselState[] = [
   },
   {
     id: 'understand-and-routine',
-    mascotCloud: 'Clear words after a careful check.',
+    mascotCloud: 'Check your instructions before setting a reminder.',
     cards: [
       {
         id: 'plain-language',
@@ -63,7 +63,7 @@ export const featureCarouselStates: readonly FeatureCarouselState[] = [
   },
   {
     id: 'reminders-and-journal',
-    mascotCloud: 'Small reminders. Less to remember.',
+    mascotCloud: 'Write down how you feel to discuss with your doctor.',
     cards: [
       {
         id: 'smart-reminders',
@@ -87,7 +87,7 @@ export const featureCarouselStates: readonly FeatureCarouselState[] = [
   },
   {
     id: 'timeline-and-safety',
-    mascotCloud: 'Your history tells the story.',
+    mascotCloud: 'If you feel seriously unwell, get medical help now.',
     cards: [
       {
         id: 'health-timeline',
@@ -162,6 +162,24 @@ export const faqGroups: readonly FaqGroup[] = [
         answer:
           'Choose Upload document, take a clear photo or select a PDF, then compare each detected detail with the original document. Anything unclear stays marked for review instead of being quietly guessed.',
       },
+      {
+        id: 'supported-documents',
+        question: 'Which documents can I use?',
+        answer:
+          'The planned service is for common care documents such as prescriptions, lab results, and discharge notes. The upload screen will show the accepted file types and sizes before you choose a document.',
+      },
+      {
+        id: 'unclear-photo',
+        question: 'What if my photo is blurry or incomplete?',
+        answer:
+          'Take another photo in good light, keep the whole page inside the frame, and make sure names and numbers are readable. An unclear detail should stay marked for review instead of being guessed.',
+      },
+      {
+        id: 'account-status',
+        question: 'Do I need an account to use Vein Health?',
+        answer:
+          'You can read this public website without an account. Future document and care-record features will require a secure account and clear consent before health information is accepted.',
+      },
     ],
   },
   {
@@ -178,6 +196,18 @@ export const faqGroups: readonly FaqGroup[] = [
         question: 'Does Vein Health share my data with anyone?',
         answer:
           'Vein Health will not sell health information or use it for advertising. A trusted service provider may process only the information needed to run a feature. Sharing a care record with a clinician or family member must be your deliberate choice and must show who will receive it.',
+      },
+      {
+        id: 'delete-information',
+        question: 'Can I ask for my information to be deleted?',
+        answer:
+          'When account features launch, you will be able to request deletion. Vein Health will explain what can be removed, what must be kept for legal or security reasons, and when protected backup copies will expire.',
+      },
+      {
+        id: 'ai-training',
+        question: 'Is my health information used to train AI?',
+        answer:
+          'Vein Health is designed so private health information is not used to train a provider’s general-purpose AI models. Any approved AI service should receive only the minimum information needed for the task and must follow written privacy safeguards.',
       },
     ],
   },
@@ -201,6 +231,18 @@ export const faqGroups: readonly FaqGroup[] = [
         question: 'What if the AI gets something wrong?',
         answer:
           'AI can misread a document or give an incomplete explanation. Vein Health keeps the original source close, marks uncertain details, and requires important medication information to be checked. If the source and the AI disagree, the source wins.',
+      },
+      {
+        id: 'feeling-unwell',
+        question: 'What should I do if I feel unwell?',
+        answer:
+          'Contact a doctor, pharmacist, or other qualified health professional. If your symptoms are severe, sudden, worsening, or feel like an emergency, contact your local emergency service immediately instead of waiting for Vein Health.',
+      },
+      {
+        id: 'change-medicine',
+        question: 'Can I change my medicine after reading an explanation?',
+        answer:
+          'No. Do not start, stop, skip, or change a medicine or dose because of an AI explanation. Speak with the doctor or pharmacist responsible for your care before changing treatment.',
       },
     ],
   },

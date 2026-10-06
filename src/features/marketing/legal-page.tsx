@@ -1,4 +1,5 @@
-import { ArrowLeft, ArrowRight, ShieldCheck } from 'lucide-react'
+import { ArrowLeft, ArrowRight, HeartPulse, ShieldCheck } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 
 import { BrandMark } from './components/mascot-moment'
 import { ContourField } from './components/contour-field'
@@ -25,11 +26,75 @@ const legalLinks = [
 
 export function LegalPage({ intro, notice, sections, title }: LegalPageProps) {
   const currentYear = new Date().getFullYear()
+  const [activeSection, setActiveSection] = useState(sections[0]?.id ?? '')
+  const navigationTargetRef = useRef('')
+  const navigationTargetReachedRef = useRef(false)
+
+  useEffect(() => {
+    let frame = 0
+    const updateFromHash = () => {
+      const id = window.location.hash.slice(1)
+      if (sections.some((section) => section.id === id)) {
+        navigationTargetRef.current = id
+        navigationTargetReachedRef.current = false
+        setActiveSection(id)
+      }
+    }
+    const nodes = sections
+      .map((section) => document.getElementById(section.id))
+      .filter((node): node is HTMLElement => Boolean(node))
+
+    const updateFromScroll = () => {
+      window.cancelAnimationFrame(frame)
+      frame = window.requestAnimationFrame(() => {
+        const navigationTarget = nodes.find((node) => node.id === navigationTargetRef.current)
+        const targetRect = navigationTarget?.getBoundingClientRect()
+        if (navigationTarget && targetRect && targetRect.top < window.innerHeight && targetRect.bottom > 0) {
+          navigationTargetReachedRef.current = true
+          setActiveSection(navigationTarget.id)
+          return
+        }
+        if (navigationTarget && !navigationTargetReachedRef.current) {
+          setActiveSection(navigationTarget.id)
+          return
+        }
+        navigationTargetRef.current = ''
+        navigationTargetReachedRef.current = false
+
+        const isAtPageEnd = window.scrollY + window.innerHeight
+          >= document.documentElement.scrollHeight - 32
+        if (isAtPageEnd) {
+          setActiveSection(nodes.at(-1)?.id ?? '')
+          return
+        }
+
+        const readingLine = window.innerHeight * 0.3
+        const current = nodes.reduce<HTMLElement | undefined>((match, node) => (
+          node.getBoundingClientRect().top <= readingLine ? node : match
+        ), nodes[0])
+        if (current?.id) {
+          setActiveSection(current.id)
+        }
+      })
+    }
+
+    updateFromHash()
+    updateFromScroll()
+    window.addEventListener('hashchange', updateFromHash)
+    window.addEventListener('resize', updateFromScroll)
+    window.addEventListener('scroll', updateFromScroll, { passive: true })
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener('hashchange', updateFromHash)
+      window.removeEventListener('resize', updateFromScroll)
+      window.removeEventListener('scroll', updateFromScroll)
+    }
+  }, [sections])
 
   return (
     <div className="legal-page" id="top">
       <ContourField className="legal-contours legal-contours--top" />
-      <ContourField className="legal-contours legal-contours--bottom" />
+      <ContourField className="legal-contours legal-contours--lower" />
       <header className="legal-header">
         <a aria-label="Vein Health home" className="brand-lockup" href="/">
           <BrandMark eager size={34} />
@@ -42,11 +107,21 @@ export function LegalPage({ intro, notice, sections, title }: LegalPageProps) {
         <header className="legal-hero">
           <p className="eyebrow">Legal information</p>
           <h1>{title}</h1>
-          <p className="legal-main__updated">Last updated October 4, 2026</p>
+          <p className="legal-main__updated">Last updated October 6, 2026</p>
           <p className="legal-main__intro">{intro}</p>
           <div className="legal-notice">
             <ShieldCheck aria-hidden="true" />
             <p>{notice}</p>
+          </div>
+          <div className="legal-care-note">
+            <HeartPulse aria-hidden="true" />
+            <div>
+              <strong>Worried about your health?</strong>
+              <p>
+                Speak with a doctor, pharmacist, or another qualified health professional.
+                For severe or urgent symptoms, contact your local emergency service now.
+              </p>
+            </div>
           </div>
         </header>
 
@@ -55,7 +130,17 @@ export function LegalPage({ intro, notice, sections, title }: LegalPageProps) {
             <span>On this page</span>
             <nav>
               {sections.map((section) => (
-                <a href={`#${section.id}`} key={section.id}>
+                <a
+                  aria-current={activeSection === section.id ? 'location' : undefined}
+                  data-active={activeSection === section.id ? 'true' : 'false'}
+                  href={`#${section.id}`}
+                  key={section.id}
+                  onClick={() => {
+                    navigationTargetRef.current = section.id
+                    navigationTargetReachedRef.current = false
+                    setActiveSection(section.id)
+                  }}
+                >
                   {section.heading}<ArrowRight aria-hidden="true" />
                 </a>
               ))}
@@ -92,7 +177,7 @@ export function LegalPage({ intro, notice, sections, title }: LegalPageProps) {
 const privacyPage = {
   title: 'Privacy Policy',
   intro: 'This policy explains what Vein Health may collect, why it is needed, how AI may process information, and the choices people have. It separates this public website from future account-based health features.',
-  notice: 'Vein Health is being designed for continuity of care, not autonomous diagnosis or treatment. Source evidence and patient verification take priority over AI-generated text.',
+  notice: 'Vein Health helps people organize and understand care information. It does not diagnose a health condition, choose treatment, or replace a doctor or pharmacist.',
   sections: [
     {
       id: 'scope',
@@ -178,11 +263,26 @@ const privacyPage = {
       ],
     },
     {
+      id: 'health-guidance',
+      heading: 'Health questions still belong with a professional',
+      paragraphs: [
+        'A privacy policy cannot answer a medical question. If you have a new symptom, a worsening health condition, a possible side effect, or a concern about medicine, contact a doctor, pharmacist, or another qualified health professional.',
+        'Do not wait for an AI explanation in an urgent situation. If symptoms are severe, sudden, or feel life-threatening, contact your local emergency service immediately.',
+      ],
+    },
+    {
       id: 'changes',
-      heading: 'Policy updates and contact',
+      heading: 'Policy updates',
       paragraphs: [
         'This policy may change as the product, launch regions, providers, and legal requirements become final. Material changes affecting account-based health information should be explained before they take effect where required. The effective date at the top of this page will be updated whenever this policy changes.',
-        'A dedicated privacy contact and the responsible legal entity will be published before Vein Health accepts account registrations or health documents.',
+      ],
+    },
+    {
+      id: 'contact',
+      heading: 'Contact us about privacy',
+      paragraphs: [
+        'You will be able to contact Vein Health to ask a privacy question, report a possible data problem, or exercise a privacy right. A verified privacy email address, the responsible legal entity, and any required postal address will be published here before Vein Health accepts account registrations or health documents.',
+        'Until that verified contact is published, do not send health documents, medicine details, symptoms, identity documents, passwords, or payment information through a public or general contact channel.',
       ],
     },
   ],
@@ -268,6 +368,14 @@ const termsPage = {
         'The date at the top shows when these public website terms last changed. If future changes materially affect an account or paid service, Vein Health will provide notice and, where required, a choice before the change takes effect.',
       ],
     },
+    {
+      id: 'contact',
+      heading: 'Questions and contact',
+      paragraphs: [
+        'A verified contact channel and the responsible legal entity will be published before account or paid services launch. Do not send private health information through an unverified public channel.',
+        'For questions about a health condition, medicine, or treatment, contact a doctor or pharmacist. For urgent or life-threatening symptoms, contact your local emergency service.',
+      ],
+    },
   ],
 } satisfies LegalPageProps
 
@@ -324,6 +432,14 @@ const cookiesPage = {
       heading: 'Duration and updates',
       paragraphs: [
         'Session technologies expire when the session ends. Persistent technologies should have a stated duration that matches their purpose and should be removed when no longer needed. This policy and any in-product cookie list will be updated when a provider, purpose, category, or duration changes.',
+      ],
+    },
+    {
+      id: 'contact',
+      heading: 'Questions about cookies',
+      paragraphs: [
+        'A verified privacy contact will be published before optional analytics or account-based health features launch. That contact will handle questions about cookie choices, browser storage, and privacy rights.',
+        'Do not include health documents, symptoms, medicine details, passwords, or other sensitive information in a general cookie question.',
       ],
     },
   ],

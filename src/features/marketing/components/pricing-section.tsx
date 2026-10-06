@@ -9,7 +9,6 @@ import {
   getDisplayedMonthlyCents,
 } from '../pricing'
 import type { BillingCadence } from '../pricing'
-import { MascotMoment } from './mascot-moment'
 import { ContourField } from './contour-field'
 
 export function PricingSection() {
@@ -25,7 +24,6 @@ export function PricingSection() {
           Choose the level of support that fits how you want to understand and
           organize your care.
         </p>
-        <MascotMoment cloud="Choose what fits your routine." state="pricing" />
       </div>
 
       <div aria-label="Billing period" className="billing-toggle" role="group">

@@ -843,7 +843,7 @@ a:focus-visible,
   line-height: 1.45;
 }
 
-.organized {
+.landing-page .organized {
   position: relative;
 }
 
@@ -2904,6 +2904,677 @@ a:focus-visible,
 @media (prefers-reduced-motion: reduce) {
   .companion-guide__avatar,
   .companion-guide__cloud {
+    animation: none !important;
+  }
+}
+
+/* Owner review — loader, section rhythm, mascot physics, contours, and legal navigation. */
+.app-intro__stage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+}
+
+.app-intro__message {
+  margin-top: 0.35rem;
+  color: var(--slate);
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.app-intro__progress {
+  width: 9rem;
+  height: 0.28rem;
+  margin-top: 1.1rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgb(39 94 213 / 12%);
+}
+
+.app-intro__progress i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #8db1ff, var(--blue), #8db1ff);
+  transform-origin: left;
+  animation: intro-progress 2.15s cubic-bezier(.22,.72,.26,1) both;
+}
+
+.app-intro__companion {
+  animation: intro-landing 920ms cubic-bezier(.2,.76,.24,1) both;
+}
+
+.workflow > .section-heading {
+  align-items: start;
+  gap: 1rem;
+}
+
+.workflow > .section-heading > div {
+  max-width: 52rem;
+}
+
+.workflow > .section-heading h2 {
+  max-width: 15ch;
+  margin-bottom: 0.85rem;
+  font-size: clamp(2.25rem, 4.1vw, 3.7rem);
+  font-weight: 690;
+  line-height: 1.06;
+}
+
+.workflow > .section-heading > div > p:not(.eyebrow) {
+  max-width: 48rem;
+  margin-top: 0;
+}
+
+.workflow > .story:first-of-type {
+  margin-top: clamp(1.5rem, 2.6vw, 2.4rem);
+}
+
+.story__media,
+.understand-visual {
+  min-height: clamp(24rem, 34vw, 28rem);
+  height: clamp(24rem, 34vw, 28rem);
+}
+
+.story__media img {
+  min-height: 0;
+  height: 100%;
+}
+
+.story__media--portrait img {
+  object-position: center 38%;
+}
+
+.landing-page .section-contours {
+  width: min(60rem, 82vw);
+  height: auto;
+  color: rgb(44 101 223 / 19%);
+  opacity: 1;
+}
+
+.landing-page .section-contours g {
+  stroke-width: 1.3;
+}
+
+.landing-page .section-contours.section-contours--workflow {
+  top: 8rem;
+  right: -11rem;
+  transform: rotate(-8deg);
+}
+
+.landing-page .section-contours.section-contours--organized {
+  bottom: 2rem;
+  left: -13rem;
+  transform: rotate(10deg) scaleX(-1);
+}
+
+.landing-page .section-contours.section-contours--pricing {
+  top: 6rem;
+  right: -12rem;
+  transform: rotate(-7deg) scaleY(-1);
+}
+
+.landing-page .companion-guide {
+  width: clamp(4.3rem, 5vw, 5rem);
+  transition: none;
+}
+
+.landing-page .companion-guide[data-visible='false'] {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.landing-page .companion-guide[data-visible='true'] {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+.landing-page .companion-guide[data-visible='true'] .companion-guide__button {
+  animation: none !important;
+}
+
+.landing-page .companion-guide__cloud,
+.landing-page .companion-guide[data-state] .companion-guide__cloud {
+  right: 64%;
+  bottom: 93%;
+  left: auto;
+  display: grid;
+  width: 11.25rem;
+  min-width: 0;
+  max-width: none;
+  min-height: 5.25rem;
+  padding: 1.2rem 1.15rem 1rem;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  filter: drop-shadow(0 12px 18px rgb(22 47 91 / 16%));
+  font-size: 0.78rem;
+  font-weight: 760;
+  line-height: 1.32;
+  opacity: 0;
+  place-items: center;
+  transform: translateY(0.5rem) scale(.82);
+  transform-origin: 88% 100%;
+  transition: opacity 240ms ease, transform 360ms cubic-bezier(.2,.82,.28,1.15);
+}
+
+.landing-page .companion-guide[data-landed='true'][data-cloud-open='true'] .companion-guide__cloud {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.companion-guide__cloud-shape {
+  position: absolute;
+  z-index: 0;
+  inset: -0.35rem -0.45rem -0.25rem;
+  width: calc(100% + 0.9rem);
+  height: calc(100% + 0.6rem);
+  overflow: visible;
+  fill: rgb(255 255 255 / 98%);
+}
+
+.companion-guide__cloud-text {
+  z-index: 1;
+}
+
+.landing-page .companion-guide__cloud::before,
+.landing-page .companion-guide__cloud::after {
+  display: none;
+  content: none;
+}
+
+.landing-page .companion-guide__cloud-trail {
+  right: 0.4rem;
+  bottom: -0.95rem;
+}
+
+.landing-page .companion-guide[data-state='upload'] .companion-guide__cloud,
+.landing-page .companion-guide[data-state='understand'] .companion-guide__cloud {
+  right: auto;
+  left: 64%;
+  transform-origin: 12% 100%;
+}
+
+.legal-page .legal-contours {
+  z-index: 0;
+  width: min(58rem, 76vw);
+  height: auto;
+  color: rgb(44 101 223 / 16%);
+  opacity: 1;
+}
+
+.legal-page .legal-contours.legal-contours--top {
+  top: 5rem;
+  right: -13rem;
+  left: auto;
+  transform: rotate(-7deg);
+}
+
+.legal-page .legal-contours.legal-contours--lower {
+  top: 52%;
+  left: -17rem;
+  transform: rotate(13deg) scaleX(-1);
+}
+
+.legal-header,
+.legal-main,
+.legal-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.legal-care-note {
+  display: flex;
+  max-width: 760px;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin-top: 1rem;
+  padding: 1.05rem 1.15rem;
+  border: 1px solid rgb(39 94 213 / 14%);
+  border-radius: 1rem;
+  background: rgb(232 240 255 / 72%);
+}
+
+.legal-care-note > svg {
+  width: 1.35rem;
+  flex: 0 0 auto;
+  color: var(--blue);
+}
+
+.legal-care-note strong {
+  display: block;
+  color: var(--ink);
+}
+
+.legal-care-note p {
+  margin: 0.3rem 0 0;
+  color: var(--slate);
+  line-height: 1.55;
+}
+
+.legal-toc a {
+  margin-inline: -0.55rem;
+  padding: 0.65rem 0.55rem;
+  border-radius: 0.65rem;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.legal-toc a[data-active='true'] {
+  border-bottom-color: transparent;
+  background: #e5eeff;
+  color: var(--blue-deep);
+  font-weight: 780;
+  transform: translateX(0.15rem);
+}
+
+.legal-toc a[data-active='true'] svg {
+  transform: translateX(0.15rem);
+}
+
+@media (min-width: 900px) {
+  .legal-layout {
+    grid-template-columns: minmax(17rem, 0.52fr) minmax(0, 1.48fr);
+    align-items: start;
+  }
+
+  .legal-toc {
+    position: sticky;
+    top: 1.5rem;
+    max-height: calc(100svh - 3rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+}
+
+@media (max-width: 899px) {
+  .legal-toc {
+    position: sticky;
+    z-index: 5;
+    top: 0.5rem;
+    padding: 0.8rem;
+    overflow-x: auto;
+  }
+
+  .legal-toc > span {
+    display: none;
+  }
+
+  .legal-toc nav {
+    display: flex;
+    width: max-content;
+    margin-top: 0;
+    gap: 0.35rem;
+  }
+
+  .legal-toc a {
+    width: max-content;
+    padding: 0.65rem 0.8rem;
+    border: 0;
+    background: rgb(255 255 255 / 76%);
+  }
+
+  .legal-toc a svg {
+    display: none;
+  }
+}
+
+@media (max-width: 819px) {
+  .workflow > .section-heading h2 {
+    margin-bottom: 0.7rem;
+    font-size: clamp(2.15rem, 10vw, 3.2rem);
+  }
+
+  .workflow > .story:first-of-type {
+    margin-top: 1.35rem;
+  }
+
+  .story__media,
+  .understand-visual {
+    min-height: 21rem;
+    height: 21rem;
+  }
+
+  .landing-page .section-contours {
+    width: 42rem;
+    color: rgb(44 101 223 / 15%);
+  }
+
+  .landing-page .companion-guide,
+  .landing-page .companion-guide[data-state] {
+    right: 0.2rem !important;
+    bottom: 4.5rem !important;
+    width: 3.65rem;
+  }
+
+  .landing-page .companion-guide__cloud,
+  .landing-page .companion-guide[data-state] .companion-guide__cloud {
+    right: 48%;
+    bottom: 116%;
+    left: auto;
+    width: 9.5rem;
+    min-height: 4.55rem;
+    padding: 1rem 0.9rem 0.8rem;
+    font-size: 0.7rem;
+    transform-origin: 91% 100%;
+  }
+
+  .landing-page .companion-guide[data-state='upload'] .companion-guide__cloud,
+  .landing-page .companion-guide[data-state='understand'] .companion-guide__cloud {
+    right: 48%;
+    left: auto;
+    transform-origin: 91% 100%;
+  }
+}
+
+@keyframes intro-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@keyframes intro-landing {
+  0% { opacity: 0; transform: translateY(-5rem) rotate(-6deg) scale(.74); }
+  58% { opacity: 1; transform: translateY(.7rem) rotate(2deg) scaleX(1.08) scaleY(.88); }
+  76% { transform: translateY(-.8rem) rotate(-1deg) scaleX(.97) scaleY(1.04); }
+  91% { transform: translateY(.18rem) scaleX(1.02) scaleY(.98); }
+  100% { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-intro__progress i,
+  .app-intro__companion {
+    animation: none !important;
+  }
+}
+
+/* Owner review: sparse contours, a true cloud bubble, and a bouncing companion. */
+.landing-page .organized {
+  padding-bottom: 0;
+}
+
+.landing-page .organized + .features {
+  padding-top: 1rem;
+}
+
+.dashboard-reference {
+  margin-bottom: 0;
+}
+
+.landing-page .section-contours {
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  width: min(43rem, 74vw);
+  height: auto;
+  color: rgb(39 94 213 / 8%);
+  opacity: 0.42;
+}
+
+.landing-page .section-contours g {
+  stroke-width: 1.1;
+}
+
+.landing-page .section-contours.section-contours--workflow {
+  top: 4rem;
+  right: -18rem;
+  transform: rotate(-10deg);
+}
+
+.landing-page .section-contours.section-contours--organized {
+  bottom: 3rem;
+  left: -19rem;
+  transform: rotate(12deg) scaleX(-1);
+}
+
+.landing-page .section-contours.section-contours--pricing {
+  top: 5rem;
+  right: -18rem;
+  transform: rotate(-8deg) scaleY(-1);
+}
+
+.legal-page .legal-contours {
+  width: min(44rem, 78vw);
+  height: auto;
+  color: rgb(39 94 213 / 8%);
+  opacity: 0.38;
+}
+
+.legal-page .legal-contours.legal-contours--top {
+  top: 4rem;
+  right: -18rem;
+  left: auto;
+  transform: rotate(-8deg);
+}
+
+.landing-page .companion-guide {
+  transition:
+    opacity 220ms ease,
+    visibility 220ms ease,
+    transform 260ms ease,
+    top 480ms cubic-bezier(0.22, 0.8, 0.28, 1),
+    right 480ms cubic-bezier(0.22, 0.8, 0.28, 1),
+    left 480ms cubic-bezier(0.22, 0.8, 0.28, 1);
+}
+
+.landing-page .companion-guide[data-visible='true'] .companion-guide__button {
+  animation: companion-section-bounce 720ms cubic-bezier(0.2, 0.78, 0.25, 1) both;
+}
+
+.landing-page .companion-guide__cloud,
+.landing-page .companion-guide[data-state] .companion-guide__cloud {
+  right: 70%;
+  bottom: 88%;
+  left: auto;
+  display: grid;
+  width: max-content;
+  min-width: 9.5rem;
+  max-width: 12.4rem;
+  min-height: 4.2rem;
+  padding: 1.05rem 1rem 0.75rem;
+  overflow: visible;
+  border: 0;
+  border-radius: 48% 52% 46% 54% / 56% 52% 48% 44%;
+  background: rgb(255 255 255 / 98%);
+  box-shadow: none;
+  filter: drop-shadow(0 12px 20px rgb(28 53 98 / 15%));
+  font-size: 0.69rem;
+  line-height: 1.35;
+  isolation: isolate;
+  place-items: center;
+  transform-origin: 88% 100%;
+  animation: companion-cloud-breathe 3.2s ease-in-out infinite;
+}
+
+.landing-page .companion-guide__cloud::before,
+.landing-page .companion-guide__cloud::after {
+  display: none;
+  content: none;
+}
+
+.companion-guide__cloud-text {
+  position: relative;
+  z-index: 3;
+  display: block;
+  text-align: center;
+}
+
+.companion-guide__cloud-lobes,
+.companion-guide__cloud-trail {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+}
+
+.companion-guide__cloud-lobes {
+  inset: 0;
+}
+
+.companion-guide__cloud-lobes i,
+.companion-guide__cloud-trail i {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 98%);
+}
+
+.companion-guide__cloud-lobes i:nth-child(1) {
+  top: -0.68rem;
+  left: 0.8rem;
+  width: 2.45rem;
+  height: 2.45rem;
+}
+
+.companion-guide__cloud-lobes i:nth-child(2) {
+  top: -1.08rem;
+  left: 3.1rem;
+  width: 3.35rem;
+  height: 3.35rem;
+}
+
+.companion-guide__cloud-lobes i:nth-child(3) {
+  top: -0.58rem;
+  right: 0.75rem;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.companion-guide__cloud-trail {
+  right: 0.2rem;
+  bottom: -1.2rem;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.companion-guide__cloud-trail i:first-child {
+  top: 0;
+  right: 0.2rem;
+  width: 0.82rem;
+  height: 0.82rem;
+}
+
+.companion-guide__cloud-trail i:last-child {
+  right: -0.05rem;
+  bottom: 0;
+  width: 0.4rem;
+  height: 0.4rem;
+}
+
+.landing-page .companion-guide[data-state='upload'] .companion-guide__cloud,
+.landing-page .companion-guide[data-state='understand'] .companion-guide__cloud,
+.landing-page .companion-guide[data-state='pricing'] .companion-guide__cloud {
+  right: auto;
+  left: 70%;
+  transform-origin: 12% 100%;
+}
+
+.landing-page .companion-guide[data-state='upload'] .companion-guide__cloud-trail,
+.landing-page .companion-guide[data-state='understand'] .companion-guide__cloud-trail,
+.landing-page .companion-guide[data-state='pricing'] .companion-guide__cloud-trail {
+  right: auto;
+  left: 0.2rem;
+  transform: scaleX(-1);
+}
+
+.apple-store-mark {
+  color: white;
+  fill: currentColor;
+}
+
+.footer-link--pending {
+  cursor: default;
+}
+
+.public-footer__bottom > div {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.public-footer__bottom > div > p {
+  margin: 0;
+  color: rgb(255 255 255 / 58%);
+  line-height: 1.5;
+}
+
+.public-footer__disclaimer {
+  max-width: 47rem;
+}
+
+.public-footer__legal {
+  flex-wrap: wrap;
+}
+
+@keyframes companion-section-bounce {
+  0% { transform: translateY(-0.65rem) scale(.97); }
+  44% { transform: translateY(0.55rem) scaleX(1.07) scaleY(.9); }
+  67% { transform: translateY(-0.72rem) scaleX(.97) scaleY(1.04); }
+  84% { transform: translateY(0.2rem) scaleX(1.02) scaleY(.98); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 819px) {
+  .landing-page .organized {
+    padding-bottom: 0;
+  }
+
+  .landing-page .organized + .features {
+    padding-top: 0.75rem;
+  }
+
+  .landing-page .section-contours {
+    width: 34rem;
+    opacity: 0.34;
+  }
+
+  .landing-page .companion-guide,
+  .landing-page .companion-guide[data-state] {
+    right: 0.1rem !important;
+    bottom: clamp(5.75rem, 14vh, 7.5rem) !important;
+    width: 3.55rem;
+  }
+
+  .landing-page .companion-guide__cloud,
+  .landing-page .companion-guide[data-state] .companion-guide__cloud {
+    right: 56%;
+    bottom: 132%;
+    left: auto;
+    min-width: 7.6rem;
+    max-width: 8.8rem;
+    min-height: 3.45rem;
+    padding: 0.82rem 0.68rem 0.56rem;
+    font-size: 0.55rem;
+    line-height: 1.3;
+    transform-origin: 92% 100%;
+  }
+
+  .landing-page .companion-guide[data-state] .companion-guide__cloud-trail {
+    right: 0.08rem;
+    bottom: -1.15rem;
+    left: auto;
+    transform: none;
+  }
+}
+
+@media (max-width: 719px) {
+  .feature-carousel__slide {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .carousel-pagination {
+    gap: 0.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-page .companion-guide[data-visible='true'] .companion-guide__button {
     animation: none !important;
   }
 }

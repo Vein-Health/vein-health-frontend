@@ -14,7 +14,23 @@ import { featureCarouselStates } from '../data'
 import type { FeatureCardData, FeatureVisual } from '../types'
 import { usePrefersReducedMotion } from '../hooks/use-prefers-reduced-motion'
 import { MascotMoment } from './mascot-moment'
-import { ContourField } from './contour-field'
+
+function useSingleCardCarousel() {
+  const [isSingleCard, setIsSingleCard] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 719px)').matches,
+  )
+
+  useEffect(() => {
+    const query = window.matchMedia('(max-width: 719px)')
+    const update = () => setIsSingleCard(query.matches)
+
+    update()
+    query.addEventListener('change', update)
+    return () => query.removeEventListener('change', update)
+  }, [])
+
+  return isSingleCard
+}
 
 function FeatureVisualMock({ type }: { type: FeatureVisual }) {
   if (type === 'capture') {
@@ -45,7 +61,7 @@ function FeatureVisualMock({ type }: { type: FeatureVisual }) {
       <div className="feature-mock feature-mock--understand">
         <span className="mock-result">Verified source fact</span>
         <ArrowRight aria-hidden="true" />
-        <strong>Explained with source context</strong>
+        <strong>Explained in simpler words</strong>
       </div>
     )
   }
@@ -117,10 +133,20 @@ export function FeatureCarousel() {
   const [activeIndex, setActiveIndex] = useState(0)
   const pointerStart = useRef<number | null>(null)
   const prefersReducedMotion = usePrefersReducedMotion()
-  const activeState = featureCarouselStates[activeIndex]
+  const isSingleCard = useSingleCardCarousel()
+  const slides = isSingleCard
+    ? featureCarouselStates.flatMap((state) => state.cards.map((card) => ({
+        cards: [card] as const,
+        id: card.id,
+        mascotCloud: state.mascotCloud,
+      })))
+    : featureCarouselStates
+  const normalizedIndex = activeIndex % slides.length
+  const activeState = slides[normalizedIndex]
+  const itemLabel = isSingleCard ? 'feature' : 'feature pair'
 
   const showState = (index: number) => {
-    const count = featureCarouselStates.length
+    const count = slides.length
     setActiveIndex((index + count) % count)
   }
 
@@ -149,11 +175,11 @@ export function FeatureCarousel() {
     }
 
     const timer = window.setInterval(() => {
-      setActiveIndex((index) => (index + 1) % featureCarouselStates.length)
-    }, 2500)
+      setActiveIndex((index) => (index + 1) % slides.length)
+    }, 3500)
 
     return () => window.clearInterval(timer)
-  }, [prefersReducedMotion])
+  }, [prefersReducedMotion, slides.length])
 
   return (
     <section
@@ -162,7 +188,6 @@ export function FeatureCarousel() {
       className={`features section${prefersReducedMotion ? ' features--reduced-motion' : ''}`}
       id="features"
     >
-      <ContourField className="section-contours section-contours--features" />
       <div className="feature-carousel__header">
         <div className="section-heading">
           <p className="eyebrow eyebrow--pill">Features</p>
@@ -175,7 +200,7 @@ export function FeatureCarousel() {
         <MascotMoment cloud={activeState?.mascotCloud ?? ''} state="carousel" />
         <div className="carousel-controls">
           <button
-            aria-label="Show previous feature pair"
+            aria-label={`Show previous ${itemLabel}`}
             className="icon-button"
             onClick={() => showState(activeIndex - 1)}
             type="button"
@@ -183,7 +208,7 @@ export function FeatureCarousel() {
             <ArrowLeft aria-hidden="true" />
           </button>
           <button
-            aria-label="Show next feature pair"
+            aria-label={`Show next ${itemLabel}`}
             className="icon-button icon-button--primary"
             onClick={() => showState(activeIndex + 1)}
             type="button"
@@ -194,7 +219,7 @@ export function FeatureCarousel() {
       </div>
 
       <p aria-live="polite" className="sr-only">
-        Feature pair {activeIndex + 1} of {featureCarouselStates.length}:{' '}
+        {isSingleCard ? 'Feature' : 'Feature pair'} {normalizedIndex + 1} of {slides.length}:{' '}
         {activeState?.cards.map((card) => card.title).join(' and ')}
       </p>
 
@@ -205,13 +230,13 @@ export function FeatureCarousel() {
       >
         <div
           className="feature-carousel__track"
-          style={{ '--active-slide': activeIndex } as CSSProperties}
+          style={{ '--active-slide': normalizedIndex } as CSSProperties}
         >
-          {featureCarouselStates.map((state, stateIndex) => (
+          {slides.map((state, stateIndex) => (
             <div
-              aria-hidden={stateIndex !== activeIndex}
+              aria-hidden={stateIndex !== normalizedIndex}
               className="feature-carousel__slide"
-              data-active={stateIndex === activeIndex ? 'true' : 'false'}
+              data-active={stateIndex === normalizedIndex ? 'true' : 'false'}
               key={state.id}
             >
               {state.cards.map((card) => <FeatureCard card={card} key={card.id} />)}
@@ -220,11 +245,11 @@ export function FeatureCarousel() {
         </div>
       </div>
 
-      <div aria-label="Choose feature pair" className="carousel-pagination" role="group">
-        {featureCarouselStates.map((state, index) => (
+      <div aria-label={`Choose ${itemLabel}`} className="carousel-pagination" role="group">
+        {slides.map((state, index) => (
           <button
-            aria-label={`Show feature pair ${index + 1}`}
-            aria-pressed={index === activeIndex}
+            aria-label={`Show ${itemLabel} ${index + 1}`}
+            aria-pressed={index === normalizedIndex}
             className="carousel-dot"
             key={state.id}
             onClick={() => showState(index)}

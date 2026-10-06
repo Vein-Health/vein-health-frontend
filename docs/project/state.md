@@ -25,9 +25,11 @@ Phase 1 is complete, including the owner-directed visual refinement. The public 
 - Privacy-safe error boundary without raw error logging
 - Tailwind/Radix/shadcn-compatible styling foundation
 - Complete public landing flow: header, direct AI-companion hero, trust row, three-step workflow, supplied dashboard preview, feature carousel, pricing, FAQ, garden footer, and legal navigation
-- Compact, wings-down full-character companion that is hidden on the hero, arrives from the navbar mark at the first workflow waypoint, hides while the page is moving, and uses short health-friendly speech bubbles without gaze or blink overlays; the supplied owl remains the compact brand mark
-- Four-state/eight-card accessible feature carousel with buttons, pagination, swipe gestures, live announcements, and automatic advancement every 2.5 seconds (with reduced-motion support)
-- Typed marketing content, integer-cent pricing helpers, responsive WebP source images, faint organic contour artwork behind content, and staggered scroll reveals
+- Compact, wings-down full-character companion that is hidden on the hero, bounces from the navbar mark at the first workflow waypoint, hides while the page is moving, and uses useful section-specific guidance in a cloud-shaped bubble without gaze or blink overlays; the supplied owl remains the compact brand mark
+- Accessible feature carousel with buttons, pagination, swipe gestures, live announcements, automatic advancement every 2.5 seconds, two cards per desktop state, and one card per narrow-screen state (with reduced-motion support)
+- Typed marketing content, integer-cent pricing helpers, responsive WebP source images, three sparse landing-page contour accents, and staggered scroll reveals
+- Compact dashboard-to-features handoff without the former preview caption or its trailing gap
+- Reference-complete footer inventory with the solid Apple and multicolor Google Play marks, Explore/Support/Connect columns, dynamic copyright year, and expanded legal navigation; unavailable external destinations remain clearly non-interactive instead of being fabricated
 - Public Privacy, Terms and Cookie Policy routes with section navigation and AI-risk disclosures
 - Safe in-page CTA destinations; authenticated login remains disabled until the authentication phase
 - Vitest, Testing Library, MSW, and Playwright coverage for the landing interactions
@@ -42,7 +44,7 @@ Phase 1 is complete, including the owner-directed visual refinement. The public 
 
 ## Verification
 
-Phase 1 type checking, linting, 8 unit/component tests, production build, four Chromium end-to-end tests, and desktop/mobile screenshot inspection pass after the owner-directed refinement. The local runtime uses explicit Node heap and semi-space limits plus single-worker browser/test settings to avoid the Windows `ELIFECYCLE`/worker crashes reproduced on this host. Exact results are recorded in `docs/project/verification.md`.
+Phase 1 type checking, linting, 11 unit/component tests, production build, four Chromium end-to-end tests, and desktop/mobile screenshot inspection pass after the owner-directed refinement. The local runtime uses explicit Node heap and semi-space limits plus single-worker browser/test settings to avoid the Windows `ELIFECYCLE`/worker crashes reproduced on this host. Exact results are recorded in `docs/project/verification.md`.
 
 ## Next action
 

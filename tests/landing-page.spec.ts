@@ -54,6 +54,9 @@ test('the narrow layout provides an accessible menu', async ({ page }) => {
     'false',
   )
   await expect(page.locator('#features')).toBeInViewport()
+  await expect(page.getByRole('group', { name: 'Choose feature' }).getByRole('button')).toHaveCount(8)
+  await expect(page.locator('.carousel-pagination [aria-pressed="true"]')).toHaveCount(1)
+  await expect(page.locator('.feature-carousel__slide[aria-hidden="false"] .feature-card')).toHaveCount(1)
 })
 
 test('reduced-motion preference produces a static component state', async ({ page }) => {
@@ -65,6 +68,23 @@ test('reduced-motion preference produces a static component state', async ({ pag
     'data-reduced-motion',
     'true',
   )
+})
+
+test('the companion lands between scrolls and stays out of the pricing section', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.getByRole('status', { name: 'Vein Health is loading' })).toBeHidden()
+
+  await page.locator('#how-it-works').scrollIntoViewIfNeeded()
+  const companion = page.locator('.companion-guide')
+  await expect(companion).toHaveAttribute('data-visible', 'true')
+  await expect(companion).toHaveAttribute('data-landed', 'true')
+
+  await page.evaluate(() => window.scrollBy({ behavior: 'instant', top: 160 }))
+  await expect(companion).toHaveAttribute('data-visible', 'false')
+
+  await page.locator('#pricing').scrollIntoViewIfNeeded()
+  await page.waitForTimeout(500)
+  await expect(companion).toHaveAttribute('data-visible', 'false')
 })
 
 test('public legal pages are reachable from the footer', async ({ page }) => {
@@ -81,4 +101,16 @@ test('public legal pages are reachable from the footer', async ({ page }) => {
     await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible()
     await expect(page.getByRole('link', { name: 'Vein Health home' })).toHaveAttribute('href', '/')
   }
+
+  await page.goto('/privacy')
+  const contactLink = page.getByRole('link', { name: 'Contact us about privacy' })
+  await expect(contactLink).toHaveAttribute('href', '#contact')
+  await expect(page.locator('.legal-toc')).toHaveCSS('position', 'sticky')
+  await expect(page.locator('.legal-contours path')).toHaveCount(6)
+  await expect(page.locator('.legal-contours--top')).toBeVisible()
+
+  await contactLink.click()
+  await expect(page.locator('#contact')).toBeInViewport()
+  await expect(contactLink).toHaveAttribute('aria-current', 'location')
+  await expect(page.getByText(/speak with a doctor, pharmacist, or another qualified health professional/i)).toBeVisible()
 })

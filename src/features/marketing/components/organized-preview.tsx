@@ -17,7 +17,10 @@ export function OrganizedPreview() {
           Documents, medications, reminders, and your care timeline, organized
           around what has been verified and what still needs your attention.
         </p>
-        <MascotMoment cloud="Your care story, all together." state="understand" />
+        <MascotMoment
+          cloud="Keep your documents and reminders together."
+          state="understand"
+        />
       </div>
 
       <figure className="dashboard-reference" data-active={isInView ? 'true' : 'false'}>
@@ -37,9 +40,6 @@ export function OrganizedPreview() {
           </picture>
           <span aria-hidden="true" className="dashboard-reference__glow" />
         </div>
-        <figcaption>
-          <span>Your whole care picture, in one place</span>
-        </figcaption>
       </figure>
     </section>
   )

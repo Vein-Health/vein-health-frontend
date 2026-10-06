@@ -73,7 +73,10 @@ export function WorkflowSection() {
             reviewed and can understand.
           </p>
         </div>
-        <MascotMoment cloud="One clear step at a time." state="intro" />
+        <MascotMoment
+          cloud="Let’s start with your original health document."
+          state="intro"
+        />
       </div>
 
       <article className="story story--media-first">
@@ -105,7 +108,10 @@ export function WorkflowSection() {
             <li><Check aria-hidden="true" /> Photo and PDF direction</li>
             <li><Check aria-hidden="true" /> Source-aware extraction preview</li>
           </ul>
-          <MascotMoment cloud="Your document stays the source." state="upload" />
+          <MascotMoment
+            cloud="Take a clear photo of the whole page."
+            state="upload"
+          />
         </div>
       </article>
 
@@ -119,7 +125,10 @@ export function WorkflowSection() {
             unverified extraction.
           </p>
           <QuestionList items={verificationQuestions} />
-          <MascotMoment cloud="Check it before you trust it." state="verify" />
+          <MascotMoment
+            cloud="Check the name, dose, and instructions carefully."
+            state="verify"
+          />
         </div>
         <div className="story__media">
           <picture>
@@ -169,7 +178,10 @@ export function WorkflowSection() {
             They do not create a diagnosis or change treatment.
           </p>
           <QuestionList items={understandingQuestions} />
-          <MascotMoment cloud="Clear words. Same medical facts." state="understand" />
+          <MascotMoment
+            cloud="Not sure what it means? Ask your doctor."
+            state="understand"
+          />
         </div>
       </article>
     </section>

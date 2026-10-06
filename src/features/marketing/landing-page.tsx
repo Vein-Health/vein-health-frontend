@@ -1,3 +1,4 @@
+import { AppIntro } from './components/app-intro'
 import { CompanionGuide } from './components/companion-guide'
 import { FaqSection } from './components/faq-section'
 import { FeatureCarousel } from './components/feature-carousel'
@@ -12,6 +13,7 @@ import { WorkflowSection } from './components/workflow-section'
 export function LandingPage() {
   return (
     <div className="landing-page">
+      <AppIntro />
       <MotionOrchestrator />
       <a className="skip-link" href="#main-content">Skip to main content</a>
       <PublicHeader />

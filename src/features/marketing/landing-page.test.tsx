@@ -1,16 +1,19 @@
-import { fireEvent, render, screen, within } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { act, fireEvent, render, screen, within } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { FeatureCarousel } from './components/feature-carousel'
+import { faqGroups } from './data'
 import { LandingPage } from './landing-page'
 
-function setReducedMotion(matches: boolean) {
+function setMediaQueries({ narrow = false, reducedMotion = false } = {}) {
   Object.defineProperty(window, 'matchMedia', {
     configurable: true,
     value: vi.fn().mockImplementation((query: string) => ({
       addEventListener: vi.fn(),
       dispatchEvent: vi.fn(),
-      matches: query === '(prefers-reduced-motion: reduce)' ? matches : false,
+      matches:
+        (query === '(prefers-reduced-motion: reduce)' && reducedMotion)
+        || (query === '(max-width: 719px)' && narrow),
       media: query,
       onchange: null,
       removeEventListener: vi.fn(),
@@ -20,7 +23,8 @@ function setReducedMotion(matches: boolean) {
 }
 
 describe('Phase 1 landing page', () => {
-  beforeEach(() => setReducedMotion(true))
+  beforeEach(() => setMediaQueries({ reducedMotion: true }))
+  afterEach(() => vi.useRealTimers())
 
   it('renders the public page with safe in-page actions', () => {
     render(<LandingPage />)
@@ -59,6 +63,65 @@ describe('Phase 1 landing page', () => {
     )
   })
 
+  it('shows one feature at a time in the narrow carousel', () => {
+    setMediaQueries({ narrow: true, reducedMotion: true })
+    render(<FeatureCarousel />)
+
+    expect(screen.getByRole('button', { name: 'Show feature 1' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    expect(screen.getByText(/Feature 1 of 8:/)).toHaveTextContent('Document scanning')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Show next feature' }))
+
+    expect(screen.getByRole('button', { name: 'Show feature 2' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    expect(screen.getByText(/Feature 2 of 8:/)).toHaveTextContent(
+      'AI extraction & verification',
+    )
+  })
+
+  it('advances the carousel at the reviewed 3.5-second cadence', () => {
+    vi.useFakeTimers()
+    setMediaQueries()
+    render(<FeatureCarousel />)
+
+    const firstDot = screen.getByRole('button', { name: 'Show feature pair 1' })
+    const secondDot = screen.getByRole('button', { name: 'Show feature pair 2' })
+
+    act(() => vi.advanceTimersByTime(3499))
+    expect(firstDot).toHaveAttribute('aria-pressed', 'true')
+
+    act(() => vi.advanceTimersByTime(1))
+    expect(secondDot).toHaveAttribute('aria-pressed', 'true')
+  })
+
+  it('keeps the first-load banner visible before revealing the page', () => {
+    vi.useFakeTimers()
+    setMediaQueries()
+    render(<LandingPage />)
+
+    expect(screen.getByRole('status', { name: 'Vein Health is loading' })).toBeInTheDocument()
+
+    act(() => vi.advanceTimersByTime(2549))
+    expect(screen.getByRole('status', { name: 'Vein Health is loading' })).toBeInTheDocument()
+
+    act(() => vi.advanceTimersByTime(1))
+    expect(screen.queryByRole('status', { name: 'Vein Health is loading' })).not.toBeInTheDocument()
+  })
+
+  it('keeps the reviewed FAQ inventory in every requested category', () => {
+    const countFor = (category: string) =>
+      faqGroups.find((group) => group.category === category)?.items.length
+
+    expect(countFor('Getting started')).toBe(5)
+    expect(countFor('Privacy & security')).toBe(4)
+    expect(countFor('Clinical')).toBe(5)
+  })
+
   it('shows exact yearly pricing and expands an FAQ answer', () => {
     render(<LandingPage />)
 
@@ -95,10 +158,23 @@ describe('Phase 1 landing page', () => {
   })
 
   it('exposes a static reduced-motion state', () => {
-    setReducedMotion(true)
+    setMediaQueries({ reducedMotion: true })
     const { container } = render(<FeatureCarousel />)
 
     expect(container.querySelector('.features')).toHaveClass('features--reduced-motion')
     expect(container.querySelector('[data-companion-waypoint]')).toBeInTheDocument()
+  })
+
+  it('keeps the reviewed footer inventory and removes the dashboard caption', () => {
+    render(<LandingPage />)
+
+    expect(screen.queryByText('Your whole care picture, in one place')).not.toBeInTheDocument()
+    expect(screen.getByText('Instagram')).toBeInTheDocument()
+    expect(screen.getByText('LinkedIn')).toBeInTheDocument()
+    expect(screen.getByText('X (Twitter)')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Health Data Policy' })).toHaveAttribute(
+      'href',
+      '/privacy#information',
+    )
   })
 })

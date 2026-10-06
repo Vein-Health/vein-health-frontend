@@ -29,8 +29,8 @@ Implementation state:
 | FE-FND-004 | API boundary | Phase 0 | Complete | Typed runtime/configuration seam and test mocks; feature API contracts remain deferred | No arbitrary AI prompt transport; no real backend required |
 | FE-FND-005 | Privacy-safe client defaults | Phase 0 | Complete | No PHI persistence/logging; cache policy; secure-session assumptions | No health payload in browser storage or URLs |
 | FE-FND-006 | Testing foundation | Phase 0 | Complete | Vitest, Testing Library, MSW, Playwright smoke path | Unit/component/E2E commands are documented and runnable |
-| MKT-001 | Public landing page | Phase 1 | Complete | Responsive public experience at `/` with supplied imagery/dashboard, small section-bound companion, scroll reveals, 2.5-second carousel, pricing, calm garden footer, and no hero/footer mascot | Typecheck, lint, unit/component tests, build, four Chromium E2E tests, and desktop/mobile screenshot inspection pass |
-| MKT-002 | Public legal/navigation destinations | Phase 1 | Complete | Accessible Privacy, Terms, and Cookie Policy routes linked from the footer; public CTAs resolve in-page | Policy drafts have section navigation and AI/privacy disclosures; legal review remains required before launch |
+| MKT-001 | Public landing page | Phase 1 | Complete | Responsive public experience at `/` with supplied imagery/dashboard, bouncing section-bound companion, sparse contours, 2.5-second desktop-pair/mobile-single carousel, pricing, calm garden footer, and no hero/footer mascot | Typecheck, lint, 11 unit/component tests, build, four Chromium E2E tests, and desktop/mobile screenshot inspection pass |
+| MKT-002 | Public legal/navigation destinations | Phase 1 | Complete | Accessible Privacy, Terms, and Cookie Policy routes; reference-complete footer labels and legal deep links; public CTAs resolve in-page | Policy drafts have section navigation and AI/privacy disclosures; unavailable external destinations are not fabricated; legal review remains required before launch |
 
 ## Identity, consent, and account
 
