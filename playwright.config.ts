@@ -25,7 +25,7 @@ export default defineConfig({
     command:
       'node --max-old-space-size=4096 --max-semi-space-size=128 node_modules/vite/bin/vite.js build && node --max-old-space-size=4096 --max-semi-space-size=128 node_modules/vite/bin/vite.js preview --host 127.0.0.1',
     url: 'http://127.0.0.1:4173',
-    reuseExistingServer: false,
+    reuseExistingServer: !process.env.CI,
     timeout: 180_000,
   },
 })

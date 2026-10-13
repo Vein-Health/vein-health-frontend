@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 
 import { usePrefersReducedMotion } from '../hooks/use-prefers-reduced-motion'
 import type { MascotState } from '../types'
@@ -27,7 +28,7 @@ function getClosestVisibleMarker(markers: readonly HTMLElement[]) {
       )
 
       return {
-        distance: Math.abs(markerRect.top - viewportAnchor),
+        distance: Math.abs((hostRect?.top ?? markerRect.top) - viewportAnchor),
         isHostVisible,
         marker,
       }
@@ -89,12 +90,14 @@ export function CompanionGuide() {
     }
 
     const onScroll = () => {
-      setIsVisible(false)
+      flushSync(() => {
+        setIsVisible(false)
+        setHasLanded(false)
+      })
       if (idleTimerRef.current !== null) {
         window.clearTimeout(idleTimerRef.current)
       }
-      setHasLanded(false)
-      idleTimerRef.current = window.setTimeout(settleAtSection, 240)
+      idleTimerRef.current = window.setTimeout(settleAtSection, 700)
     }
 
     settleAtSection()

@@ -345,8 +345,7 @@ a:focus-visible,
   animation: mascot-blink 280ms 320ms ease-in-out 1;
 }
 
-.public-header__desktop-nav,
-.button--nav {
+.public-header__desktop-nav {
   display: none;
 }
 
@@ -378,8 +377,7 @@ a:focus-visible,
   backdrop-filter: blur(18px);
 }
 
-.public-header__mobile-nav a,
-.public-header__planned-link {
+.public-header__mobile-nav a {
   display: block;
   padding: 0.9rem 1rem;
   border-radius: 0.85rem;
@@ -390,10 +388,6 @@ a:focus-visible,
 
 .public-header__mobile-nav a:hover {
   background: var(--surface-blue);
-}
-
-.public-header__planned-link {
-  color: var(--muted);
 }
 
 .hero {
@@ -2073,15 +2067,6 @@ a:focus-visible,
     transform: scaleX(1);
   }
 
-  .button--nav {
-    display: inline-flex;
-    min-height: 3rem;
-    margin-left: clamp(0.5rem, 2vw, 1.25rem);
-    padding-inline: 1.35rem;
-    background: var(--ink);
-    color: white;
-  }
-
   .public-header__menu-button,
   .public-header__mobile-nav {
     display: none;
@@ -3312,20 +3297,25 @@ a:focus-visible,
   right: auto;
   bottom: auto;
   left: auto;
-  width: min(43rem, 74vw);
+  width: min(45rem, 76vw);
   height: auto;
-  color: rgb(39 94 213 / 8%);
-  opacity: 0.42;
+  color: rgb(39 94 213 / 16%);
+  opacity: 0.72;
 }
 
 .landing-page .section-contours g {
-  stroke-width: 1.1;
+  stroke-width: 1;
+}
+
+.landing-page .section > :not(.section-contours) {
+  position: relative;
+  z-index: 1;
 }
 
 .landing-page .section-contours.section-contours--workflow {
-  top: 4rem;
-  right: -18rem;
-  transform: rotate(-10deg);
+  top: 20rem;
+  left: -18rem;
+  transform: rotate(11deg) scaleX(-1);
 }
 
 .landing-page .section-contours.section-contours--organized {
@@ -3336,15 +3326,15 @@ a:focus-visible,
 
 .landing-page .section-contours.section-contours--pricing {
   top: 5rem;
-  right: -18rem;
+  right: -16rem;
   transform: rotate(-8deg) scaleY(-1);
 }
 
 .legal-page .legal-contours {
   width: min(44rem, 78vw);
   height: auto;
-  color: rgb(39 94 213 / 8%);
-  opacity: 0.38;
+  color: rgb(39 94 213 / 13%);
+  opacity: 0.62;
 }
 
 .legal-page .legal-contours.legal-contours--top {

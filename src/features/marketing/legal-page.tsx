@@ -107,7 +107,7 @@ export function LegalPage({ intro, notice, sections, title }: LegalPageProps) {
         <header className="legal-hero">
           <p className="eyebrow">Legal information</p>
           <h1>{title}</h1>
-          <p className="legal-main__updated">Last updated October 6, 2026</p>
+          <p className="legal-main__updated">Last updated October 13, 2026</p>
           <p className="legal-main__intro">{intro}</p>
           <div className="legal-notice">
             <ShieldCheck aria-hidden="true" />

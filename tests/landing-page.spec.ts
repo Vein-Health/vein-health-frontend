@@ -11,7 +11,9 @@ test('the public landing page supports its primary interactions', async ({ page 
     'href',
     '#how-it-works',
   )
-  await expect(page.getByRole('button', { name: 'Login' })).toBeDisabled()
+  await expect(page.getByText(/login/i)).toHaveCount(0)
+  await expect(page.locator('.section-contours')).toHaveCount(3)
+  await expect(page.locator('.section-contours--workflow')).toBeVisible()
 
   const activeSlide = page.locator('.feature-carousel__slide[aria-hidden="false"]')
   await page.getByRole('button', { name: 'Show feature pair 1' }).click()
@@ -79,8 +81,30 @@ test('the companion lands between scrolls and stays out of the pricing section',
   await expect(companion).toHaveAttribute('data-visible', 'true')
   await expect(companion).toHaveAttribute('data-landed', 'true')
 
-  await page.evaluate(() => window.scrollBy({ behavior: 'instant', top: 160 }))
-  await expect(companion).toHaveAttribute('data-visible', 'false')
+  const hidDuringScroll = await page.evaluate(() => new Promise<boolean>((resolve) => {
+    const guide = document.querySelector('.companion-guide')
+    if (!guide) {
+      resolve(false)
+      return
+    }
+
+    let timeoutId = 0
+    const finish = (wasHidden: boolean) => {
+      window.clearTimeout(timeoutId)
+      observer.disconnect()
+      resolve(wasHidden)
+    }
+    const observer = new MutationObserver(() => {
+      if (guide.getAttribute('data-visible') === 'false') {
+        finish(true)
+      }
+    })
+
+    observer.observe(guide, { attributeFilter: ['data-visible'], attributes: true })
+    timeoutId = window.setTimeout(() => finish(false), 2_000)
+    window.scrollBy({ behavior: 'instant', top: 160 })
+  }))
+  expect(hidDuringScroll).toBe(true)
 
   await page.locator('#pricing').scrollIntoViewIfNeeded()
   await page.waitForTimeout(500)

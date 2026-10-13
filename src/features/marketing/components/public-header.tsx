@@ -54,18 +54,6 @@ export function PublicHeader() {
         </nav>
 
         <button
-          aria-describedby="login-status"
-          className="button button--nav"
-          disabled
-          type="button"
-        >
-          Login
-        </button>
-        <span className="sr-only" id="login-status">
-          Authentication is not available in this phase.
-        </span>
-
-        <button
           aria-controls="mobile-navigation"
           aria-expanded={isMenuOpen}
           aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -92,7 +80,6 @@ export function PublicHeader() {
             {item.label}
           </a>
         ))}
-        <span className="public-header__planned-link">Login - coming next</span>
       </nav>
     </header>
   )

@@ -39,7 +39,7 @@ describe('Phase 1 landing page', () => {
       'href',
       '#how-it-works',
     )
-    expect(screen.getByRole('button', { name: 'Login' })).toBeDisabled()
+    expect(screen.queryByText(/login/i)).not.toBeInTheDocument()
     expect(screen.getByRole('img', { name: /vein health dashboard/i })).toBeInTheDocument()
   })
 
