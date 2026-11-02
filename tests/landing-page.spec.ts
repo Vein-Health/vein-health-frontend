@@ -12,6 +12,9 @@ test('the public landing page renders the corrected section flow', async ({ page
   await expect(page.locator('.companion-guide')).toHaveCount(0)
   await expect(page.locator('.feature-carousel')).toHaveCount(0)
   await expect(page.getByText('Starter')).toHaveCount(0)
+  await expect(page.getByRole('link', { name: 'Login' })).toHaveCount(0)
+  await expect(page.getByRole('link', { name: 'Get App' }).first()).toHaveAttribute('href', /play\.google\.com/)
+  await expect(page.locator('img[src="/assets/landing/phone-flow-full.png"]')).toHaveCount(1)
   await expect(page.locator('img[src="/assets/landing/vee-bold.png"]').first()).toBeVisible()
 
   await page.getByRole('button', { name: 'What documents can I upload?' }).click()
@@ -47,6 +50,7 @@ test('reduced motion disables non-essential entrance movement', async ({ page })
 
   await expect(page.locator('.reveal-item').first()).toHaveAttribute('data-revealed', 'true')
   await expect(page.locator('.companion-guide')).toHaveCount(0)
+  await expect(page.locator('.app-intro__loader--static')).toBeVisible()
 })
 
 test('public legal and support routes share the footer', async ({ page }) => {
@@ -62,6 +66,9 @@ test('public legal and support routes share the footer', async ({ page }) => {
     await expect(page.getByRole('link', { name: 'Vein Health home' }).first()).toHaveAttribute('href', '/')
     await expect(page.getByRole('link', { name: 'Refund Policy' })).toHaveAttribute('href', '/refund')
     await expect(page.getByRole('link', { name: 'Support', exact: true })).toHaveAttribute('href', '/support')
+    await expect(page.getByRole('contentinfo').getByText('Medications')).toHaveCount(0)
+    await expect(page.getByRole('contentinfo').getByText('Reminders')).toHaveCount(0)
+    await expect(page.getByRole('contentinfo').getByText('Contact / Support')).toHaveCount(0)
   }
 
   await page.goto('/support')

@@ -1,4 +1,5 @@
 import { faqItems } from './data'
+import { getAppDownloadUrl } from './app-download'
 import { AppIntro } from './components/app-intro'
 import { BrandMark } from './components/brand-mark'
 import { MotionOrchestrator } from './components/motion-orchestrator'
@@ -80,16 +81,17 @@ function HeroSection() {
           alt="A family sharing a warm moment in a flower-filled meadow"
           height="1200"
           loading="eager"
-          src="/assets/landing/hero.png"
+          src="/assets/landing/hero-family.png"
           width="2138"
         />
-        <h1 className="sr-only" id="hero-heading">Understanding your health shouldn't feel impossible.</h1>
-        <a aria-label="Download Vein Health. Store links are coming soon." className="hero-hotspot hero-hotspot--download" href="#download">
-          <span className="sr-only">Download Vein Health</span>
-        </a>
-        <a aria-label="See how Vein Health works" className="hero-hotspot hero-hotspot--how" href="#how-it-works">
-          <span className="sr-only">See how it works</span>
-        </a>
+        <div className="hero-copy">
+          <h1 id="hero-heading">Understanding your health shouldn't feel impossible.</h1>
+          <p>Scan prescriptions and lab results, understand what they mean, and keep your health organized in one place.</p>
+          <div className="hero-actions">
+            <a className="button button--primary" href={getAppDownloadUrl()}>Download Vein Health</a>
+            <a className="button button--hero-secondary" href="#how-it-works">See how it works</a>
+          </div>
+        </div>
       </figure>
     </section>
   )
@@ -150,7 +152,7 @@ function ProductBridgeSection() {
       <ReferencePreview
         alt="Approved sample visual showing a lab report scanned on one phone and explained on another"
         className="reference-preview--phones"
-        src="/assets/landing/phone-flow-reference.png"
+        src="/assets/landing/phone-flow-full.png"
       />
       <p className="preview-disclaimer">Sample product preview. Vein Health explains your records. It does not diagnose or treat.</p>
     </section>
@@ -250,7 +252,7 @@ function ClosingCta() {
     <section aria-labelledby="closing-heading" className="closing-cta">
       <h2 id="closing-heading">Your health, easier to understand.</h2>
       <p>Scan your health information, stay organized, and keep track of what matters.</p>
-      <a className="button button--primary" href="#download">Download Vein Health</a>
+      <a className="button button--primary" href={getAppDownloadUrl()}>Download Vein Health</a>
       <span>Start with <strong>3 days free.</strong></span>
     </section>
   )

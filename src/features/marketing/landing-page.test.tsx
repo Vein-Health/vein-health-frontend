@@ -45,7 +45,7 @@ describe('new landing page', () => {
     expect(container.querySelector('.medication-preview')).not.toBeInTheDocument()
     expect(container.querySelector('.timeline-preview')).not.toBeInTheDocument()
     expect(container.querySelector('.safety-preview')).not.toBeInTheDocument()
-    expect(container.querySelector('img[src="/assets/landing/phone-flow-reference.png"]')).toBeInTheDocument()
+    expect(container.querySelector('img[src="/assets/landing/phone-flow-full.png"]')).toBeInTheDocument()
     expect(container.querySelector('img[src="/assets/landing/medication-schedule-reference.png"]')).toBeInTheDocument()
     expect(container.querySelector('img[src="/assets/landing/health-timeline-reference.png"]')).toBeInTheDocument()
     expect(container.querySelector('img[src="/assets/landing/safety-reference.png"]')).toBeInTheDocument()
@@ -70,6 +70,8 @@ describe('new landing page', () => {
     renderLanding()
 
     expect(screen.queryByRole('link', { name: 'Pricing' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Login' })).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Get App' })).toHaveAttribute('href', expect.stringContaining('play.google.com'))
     const menuButton = screen.getByRole('button', { name: 'Open navigation menu' })
     fireEvent.click(menuButton)
     expect(screen.getByRole('navigation', { name: 'Mobile navigation' })).not.toHaveAttribute('hidden')
@@ -84,7 +86,10 @@ describe('new landing page', () => {
     expect(screen.getByText('Private by design')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Refund Policy' })).toHaveAttribute('href', '/refund')
     expect(screen.getByRole('link', { name: 'Support' })).toHaveAttribute('href', '/support')
-    expect(screen.getByRole('link', { name: 'Contact / Support' })).toHaveAttribute('href', '/support')
+    const footer = container.querySelector('footer')
+    expect(footer?.textContent).not.toContain('Medications')
+    expect(footer?.textContent).not.toContain('Reminders')
+    expect(footer?.textContent).not.toContain('Contact / Support')
     expect(screen.getByRole('link', { name: 'support@veinhealth.co' })).toHaveAttribute(
       'href',
       'mailto:support@veinhealth.co',

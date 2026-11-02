@@ -1,6 +1,6 @@
 # Frontend project state
 
-Last updated: 2026-10-13
+Last updated: 2026-11-02
 
 ## Repository
 
@@ -15,7 +15,7 @@ The parent `vein-health` folder is a coordination directory, not a Git repositor
 
 ## Current phase
 
-Phase 1 is complete, including the owner-directed interaction and visual refinement. The public route `/` now renders the responsive Vein Health landing page, the supplied dashboard reference, the living AI companion, and public policy pages. Work stops at the public boundary; authentication and consent remain a separate phase requiring approved contracts.
+The public landing-page rebuild is complete through the approved design-reference pass. The public route `/` now renders the responsive Vein Health landing page, shared public navigation/footer architecture, legal routes, and deferred Refund/Support shells. Authentication, backend, billing, mobile, and deployment infrastructure remain outside this pass.
 
 ## What exists
 
@@ -24,14 +24,13 @@ Phase 1 is complete, including the owner-directed interaction and visual refinem
 - Zod-validated runtime configuration
 - Privacy-safe error boundary without raw error logging
 - Tailwind/Radix/shadcn-compatible styling foundation
-- Complete public landing flow: header, direct AI-companion hero, trust row, three-step workflow, supplied dashboard preview, feature carousel, pricing, FAQ, garden footer, and legal navigation
-- A 2.55-second full-screen first-load companion banner, followed by a compact, wings-down full-character companion that stays off the hero, bounces from the navbar mark at the first workflow waypoint, hides while the page is moving, lands at section-safe edges, and uses simple health-friendly guidance in a full cloud bubble; the supplied owl remains the compact brand mark
-- Accessible feature carousel with buttons, pagination, swipe gestures, live announcements, automatic advancement every 3.5 seconds, two cards per desktop state, and one card per narrow-screen state (with reduced-motion support)
-- Typed marketing content, integer-cent pricing helpers, responsive WebP source images, sparse irregular landing/legal contour accents that avoid the footer, and staggered scroll reveals
-- Compact dashboard-to-features handoff without the former preview caption or its trailing gap
-- Reference-complete footer inventory with the solid Apple and multicolor Google Play marks, Explore/Support/Connect columns, dynamic copyright year, and expanded legal navigation; unavailable external destinations remain clearly non-interactive instead of being fabricated
+- Complete public landing flow: responsive header, three-second head-only owl preloader, approved visual sections, FAQ, private-by-design strip, shared footer, and legal navigation
+- Full-height two-phone scan-to-understand visual assembled from adjacent approved reference captures; the document-scanning asset is byte-identical to `new\image assets\2.png`
+- Typed marketing content, clean Plus Jakarta Sans typography, tighter section rhythm, restrained IntersectionObserver reveals, and reduced-motion support
+- Get App routing to official Google Play/App Store searches until final app listing IDs are approved
+- Clean footer with Explore and Connect columns, legal links, support email, dynamic copyright year, and no legacy medications/reminders/contact column
 - Public Privacy, Terms and Cookie Policy routes with sticky, keyboard-accessible section navigation, reliable active-location highlighting, contact sections, and AI-risk/clinical-escalation disclosures
-- Safe in-page CTA destinations; the public page exposes no login or authentication entry point until that separate phase is authorized
+- Safe external store-search CTA destinations; the public page exposes no login or authentication entry point
 - Vitest, Testing Library, MSW, and Playwright coverage for the landing interactions
 - Byte-identical PRD and 25 landing design PNG snapshots
 - Product, architecture, frontend, audit, decision, and phase-control documentation

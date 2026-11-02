@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 
+import { APP_STORE_SEARCH_URL, GOOGLE_PLAY_SEARCH_URL } from '../app-download'
 import { navigationItems } from '../data'
 import { BrandMark } from './brand-mark'
 
@@ -31,11 +32,13 @@ function GooglePlayMark() {
 }
 
 function StoreBadge({ kind, label }: { kind: 'apple' | 'google'; label: string }) {
+  const href = kind === 'apple' ? APP_STORE_SEARCH_URL : GOOGLE_PLAY_SEARCH_URL
+
   return (
-    <span aria-disabled="true" className="store-badge store-badge--disabled" role="img">
+    <a className="store-badge" href={href} rel="noreferrer" target="_blank">
       {kind === 'apple' ? <AppleStoreMark /> : <GooglePlayMark />}
-      <span><small>COMING SOON</small><strong>{label}</strong></span>
-    </span>
+      <span><small>{kind === 'apple' ? 'SEARCH THE' : 'GET IT ON'}</small><strong>{label}</strong></span>
+    </a>
   )
 }
 
@@ -61,17 +64,10 @@ export function PublicFooter() {
             <BrandMark size={40} />
             <span>Vein Health</span>
           </a>
-          <p>Your health companion.</p>
         </div>
 
         <FooterColumn title="Explore">
           {navigationItems.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}
-        </FooterColumn>
-        <FooterColumn title="Support">
-          <a href="/#medications">Medications</a>
-          <a href="/#medications">Reminders</a>
-          <a href="/support">Contact / Support</a>
-          <a href="mailto:support@veinhealth.co">support@veinhealth.co</a>
         </FooterColumn>
         <FooterColumn title="Connect">
           <a href="https://www.instagram.com/" rel="noreferrer" target="_blank">Instagram</a>
@@ -87,6 +83,7 @@ export function PublicFooter() {
         </div>
         <nav aria-label="Legal information" className="public-footer__legal">
           {legalLinks.map((item) => <a href={item.to} key={item.to}>{item.label}</a>)}
+          <a href="mailto:support@veinhealth.co">support@veinhealth.co</a>
         </nav>
       </div>
     </footer>

@@ -473,10 +473,10 @@ export function RefundPage() {
 
 export function SupportPage() {
   return (
-    <DeferredPage id="login" title="Support">
+    <DeferredPage title="Support">
       <p>For general support questions, email <a href="mailto:support@veinhealth.co">support@veinhealth.co</a>.</p>
       <p>Do not send sensitive health documents, medication details, symptoms, identity documents, passwords, or payment information through a general email until the final support workflow is published.</p>
-      <p id="download">The web login and mobile-store download destinations remain deferred until approved routes and listings are available.</p>
+      <p>Store listing IDs will replace the current official store-search destinations when the approved listings are published.</p>
     </DeferredPage>
   )
 }
