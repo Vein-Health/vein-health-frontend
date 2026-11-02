@@ -9,6 +9,8 @@ import { LandingPage } from '../../features/marketing'
 import {
   CookiesPage,
   PrivacyPage,
+  RefundPage,
+  SupportPage,
   TermsPage,
 } from '../../features/marketing/legal-page'
 
@@ -40,11 +42,25 @@ const cookiesRoute = createRoute({
   component: CookiesPage,
 })
 
+const refundRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/refund',
+  component: RefundPage,
+})
+
+const supportRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/support',
+  component: SupportPage,
+})
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   privacyRoute,
   termsRoute,
   cookiesRoute,
+  refundRoute,
+  supportRoute,
 ])
 
 export const router = createRouter({ routeTree })

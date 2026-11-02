@@ -1,19 +1,14 @@
-import { act, fireEvent, render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-
-import { FeatureCarousel } from './components/feature-carousel'
-import { faqGroups } from './data'
 import { LandingPage } from './landing-page'
 
-function setMediaQueries({ narrow = false, reducedMotion = false } = {}) {
+function setMediaQueries(reducedMotion = false) {
   Object.defineProperty(window, 'matchMedia', {
     configurable: true,
     value: vi.fn().mockImplementation((query: string) => ({
       addEventListener: vi.fn(),
       dispatchEvent: vi.fn(),
-      matches:
-        (query === '(prefers-reduced-motion: reduce)' && reducedMotion)
-        || (query === '(max-width: 719px)' && narrow),
+      matches: query === '(prefers-reduced-motion: reduce)' && reducedMotion,
       media: query,
       onchange: null,
       removeEventListener: vi.fn(),
@@ -22,159 +17,77 @@ function setMediaQueries({ narrow = false, reducedMotion = false } = {}) {
   })
 }
 
-describe('Phase 1 landing page', () => {
-  beforeEach(() => setMediaQueries({ reducedMotion: true }))
+describe('new landing page', () => {
+  beforeEach(() => setMediaQueries(true))
   afterEach(() => vi.useRealTimers())
 
-  it('renders the public page with safe in-page actions', () => {
-    render(<LandingPage />)
+  const renderLanding = () => render(<LandingPage />)
 
-    expect(
-      screen.getByRole('heading', {
-        level: 1,
-        name: /meet your AI companion for clearer care/i,
-      }),
-    ).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Get Started' })).toHaveAttribute(
-      'href',
-      '#how-it-works',
-    )
-    expect(screen.queryByText(/login/i)).not.toBeInTheDocument()
-    expect(screen.getByRole('img', { name: /vein health dashboard/i })).toBeInTheDocument()
+  it('renders every new section in the requested order without stale pricing or mascot behavior', () => {
+    const { container } = renderLanding()
+
+    expect(screen.getByRole('heading', { level: 1, name: /understanding your health/i })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'How Vein Health works' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Review and verify' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Understand and stay organized' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Feel more in control of your health' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Stay on top of your medications' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'See your health journey clearly' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Know when something needs attention' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Common questions' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Your health, easier to understand.' })).toBeInTheDocument()
+    expect(screen.queryByText('Starter')).not.toBeInTheDocument()
+    expect(screen.queryByText('Pro')).not.toBeInTheDocument()
+    expect(container.querySelector('.companion-guide')).not.toBeInTheDocument()
+    expect(container.querySelector('.feature-carousel')).not.toBeInTheDocument()
+    expect(container.querySelector('img[src*="vein-companion"]')).not.toBeInTheDocument()
+    expect(container.querySelector('.phone-frame')).not.toBeInTheDocument()
+    expect(container.querySelector('.medication-preview')).not.toBeInTheDocument()
+    expect(container.querySelector('.timeline-preview')).not.toBeInTheDocument()
+    expect(container.querySelector('.safety-preview')).not.toBeInTheDocument()
+    expect(container.querySelector('img[src="/assets/landing/phone-flow-reference.png"]')).toBeInTheDocument()
+    expect(container.querySelector('img[src="/assets/landing/medication-schedule-reference.png"]')).toBeInTheDocument()
+    expect(container.querySelector('img[src="/assets/landing/health-timeline-reference.png"]')).toBeInTheDocument()
+    expect(container.querySelector('img[src="/assets/landing/safety-reference.png"]')).toBeInTheDocument()
+    expect(container.querySelector('img[src="/assets/landing/vee-bold.png"]')).toBeInTheDocument()
   })
 
-  it('moves through the feature states with controls and pagination', () => {
-    render(<FeatureCarousel />)
+  it('uses measured, truthful accordion controls for workflow and FAQ questions', () => {
+    renderLanding()
 
-    const firstDot = screen.getByRole('button', { name: 'Show feature pair 1' })
-    const secondDot = screen.getByRole('button', { name: 'Show feature pair 2' })
-    expect(firstDot).toHaveAttribute('aria-pressed', 'true')
+    const uploadQuestion = screen.getByRole('button', { name: 'What documents can I upload?' })
+    expect(uploadQuestion).toHaveAttribute('aria-expanded', 'false')
+    fireEvent.click(uploadQuestion)
+    expect(uploadQuestion).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByText(/start with a clear photo or supported file/i)).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('button', { name: 'Show next feature pair' }))
-
-    expect(secondDot).toHaveAttribute('aria-pressed', 'true')
-    expect(screen.getByText(/Feature pair 2 of 4:/)).toHaveTextContent(
-      'Plain-language explanations and Medication schedules',
-    )
-
-    fireEvent.click(screen.getByRole('button', { name: 'Show feature pair 4' }))
-    expect(screen.getByText(/Feature pair 4 of 4:/)).toHaveTextContent(
-      'Health timeline and Safety escalation',
-    )
+    const faqQuestion = screen.getByRole('button', { name: 'What is Vein Health?' })
+    fireEvent.click(faqQuestion)
+    expect(faqQuestion).toHaveAttribute('aria-expanded', 'true')
   })
 
-  it('shows one feature at a time in the narrow carousel', () => {
-    setMediaQueries({ narrow: true, reducedMotion: true })
-    render(<FeatureCarousel />)
+  it('keeps the header keyboard accessible and omits Pricing from navigation', () => {
+    renderLanding()
 
-    expect(screen.getByRole('button', { name: 'Show feature 1' })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    )
-    expect(screen.getByText(/Feature 1 of 8:/)).toHaveTextContent('Document scanning')
-
-    fireEvent.click(screen.getByRole('button', { name: 'Show next feature' }))
-
-    expect(screen.getByRole('button', { name: 'Show feature 2' })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    )
-    expect(screen.getByText(/Feature 2 of 8:/)).toHaveTextContent(
-      'AI extraction & verification',
-    )
-  })
-
-  it('advances the carousel at the reviewed 3.5-second cadence', () => {
-    vi.useFakeTimers()
-    setMediaQueries()
-    render(<FeatureCarousel />)
-
-    const firstDot = screen.getByRole('button', { name: 'Show feature pair 1' })
-    const secondDot = screen.getByRole('button', { name: 'Show feature pair 2' })
-
-    act(() => vi.advanceTimersByTime(3499))
-    expect(firstDot).toHaveAttribute('aria-pressed', 'true')
-
-    act(() => vi.advanceTimersByTime(1))
-    expect(secondDot).toHaveAttribute('aria-pressed', 'true')
-  })
-
-  it('keeps the first-load banner visible before revealing the page', () => {
-    vi.useFakeTimers()
-    setMediaQueries()
-    render(<LandingPage />)
-
-    expect(screen.getByRole('status', { name: 'Vein Health is loading' })).toBeInTheDocument()
-
-    act(() => vi.advanceTimersByTime(2549))
-    expect(screen.getByRole('status', { name: 'Vein Health is loading' })).toBeInTheDocument()
-
-    act(() => vi.advanceTimersByTime(1))
-    expect(screen.queryByRole('status', { name: 'Vein Health is loading' })).not.toBeInTheDocument()
-  })
-
-  it('keeps the reviewed FAQ inventory in every requested category', () => {
-    const countFor = (category: string) =>
-      faqGroups.find((group) => group.category === category)?.items.length
-
-    expect(countFor('Getting started')).toBe(5)
-    expect(countFor('Privacy & security')).toBe(4)
-    expect(countFor('Clinical')).toBe(5)
-  })
-
-  it('shows exact yearly pricing and expands an FAQ answer', () => {
-    render(<LandingPage />)
-
-    fireEvent.click(screen.getByRole('button', { name: /Yearly/ }))
-
-    const pricing = screen.getByRole('heading', { name: 'Get access to Vein Health' })
-      .closest('section')
-    expect(pricing).not.toBeNull()
-    expect(within(pricing!).getByText('$6.79')).toBeInTheDocument()
-    expect(within(pricing!).getByText('$16.99')).toBeInTheDocument()
-    expect(within(pricing!).getByText('$81.50 billed yearly · save $14.38')).toBeInTheDocument()
-    expect(within(pricing!).getByText('$203.90 billed yearly · save $35.98')).toBeInTheDocument()
-
-    fireEvent.click(screen.getByRole('button', { name: 'What is Vein Health?' }))
-    expect(
-      screen.getByText(/helps you keep the health information/i),
-    ).toBeVisible()
-  })
-
-  it('opens the mobile navigation and closes it with Escape', () => {
-    render(<LandingPage />)
-
+    expect(screen.queryByRole('link', { name: 'Pricing' })).not.toBeInTheDocument()
     const menuButton = screen.getByRole('button', { name: 'Open navigation menu' })
     fireEvent.click(menuButton)
-    expect(screen.getByRole('navigation', { name: 'Mobile navigation' })).not.toHaveAttribute(
-      'hidden',
-    )
-
+    expect(screen.getByRole('navigation', { name: 'Mobile navigation' })).not.toHaveAttribute('hidden')
     fireEvent.keyDown(document, { key: 'Escape' })
-    expect(screen.getByRole('button', { name: 'Open navigation menu' })).toHaveAttribute(
-      'aria-expanded',
-      'false',
-    )
+    expect(screen.getByRole('button', { name: 'Open navigation menu' })).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('exposes a static reduced-motion state', () => {
-    setMediaQueries({ reducedMotion: true })
-    const { container } = render(<FeatureCarousel />)
+  it('keeps reduced motion static and renders the shared footer inventory', () => {
+    const { container } = renderLanding()
 
-    expect(container.querySelector('.features')).toHaveClass('features--reduced-motion')
-    expect(container.querySelector('[data-companion-waypoint]')).toBeInTheDocument()
-  })
-
-  it('keeps the reviewed footer inventory and removes the dashboard caption', () => {
-    render(<LandingPage />)
-
-    expect(screen.queryByText('Your whole care picture, in one place')).not.toBeInTheDocument()
-    expect(screen.getByText('Instagram')).toBeInTheDocument()
-    expect(screen.getByText('LinkedIn')).toBeInTheDocument()
-    expect(screen.getByText('X (Twitter)')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Health Data Policy' })).toHaveAttribute(
+    expect(container.querySelector('.reveal-item[data-revealed="true"]')).toBeInTheDocument()
+    expect(screen.getByText('Private by design')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Refund Policy' })).toHaveAttribute('href', '/refund')
+    expect(screen.getByRole('link', { name: 'Support' })).toHaveAttribute('href', '/support')
+    expect(screen.getByRole('link', { name: 'Contact / Support' })).toHaveAttribute('href', '/support')
+    expect(screen.getByRole('link', { name: 'support@veinhealth.co' })).toHaveAttribute(
       'href',
-      '/privacy#information',
+      'mailto:support@veinhealth.co',
     )
   })
 })

@@ -1,8 +1,8 @@
-import { ArrowLeft, ArrowRight, HeartPulse, ShieldCheck } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { ArrowRight, HeartPulse, ShieldCheck } from 'lucide-react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 
-import { BrandMark } from './components/mascot-moment'
-import { ContourField } from './components/contour-field'
+import { PublicFooter } from './components/public-footer'
+import { PublicHeader } from './components/public-header'
 
 interface LegalSection {
   bullets?: readonly string[]
@@ -18,14 +18,7 @@ interface LegalPageProps {
   title: string
 }
 
-const legalLinks = [
-  { href: '/privacy', label: 'Privacy' },
-  { href: '/terms', label: 'Terms' },
-  { href: '/cookies', label: 'Cookies' },
-] as const
-
 export function LegalPage({ intro, notice, sections, title }: LegalPageProps) {
-  const currentYear = new Date().getFullYear()
   const [activeSection, setActiveSection] = useState(sections[0]?.id ?? '')
   const navigationTargetRef = useRef('')
   const navigationTargetReachedRef = useRef(false)
@@ -93,17 +86,10 @@ export function LegalPage({ intro, notice, sections, title }: LegalPageProps) {
 
   return (
     <div className="legal-page" id="top">
-      <ContourField className="legal-contours legal-contours--top" />
-      <ContourField className="legal-contours legal-contours--lower" />
-      <header className="legal-header">
-        <a aria-label="Vein Health home" className="brand-lockup" href="/">
-          <BrandMark eager size={34} />
-          <span>Vein Health</span>
-        </a>
-        <a className="legal-header__back" href="/"><ArrowLeft aria-hidden="true" /> Back to home</a>
-      </header>
+      <a className="skip-link" href="#legal-main">Skip to legal content</a>
+      <PublicHeader />
 
-      <main className="legal-main">
+      <main className="legal-main" id="legal-main">
         <header className="legal-hero">
           <p className="eyebrow">Legal information</p>
           <h1>{title}</h1>
@@ -164,12 +150,7 @@ export function LegalPage({ intro, notice, sections, title }: LegalPageProps) {
         </div>
       </main>
 
-      <footer className="legal-footer">
-        <span>© {currentYear} Vein Health</span>
-        <nav aria-label="Legal pages">
-          {legalLinks.map((link) => <a href={link.href} key={link.href}>{link.label}</a>)}
-        </nav>
-      </footer>
+      <PublicFooter />
     </div>
   )
 }
@@ -455,4 +436,47 @@ export function TermsPage() {
 
 export function CookiesPage() {
   return <LegalPage {...cookiesPage} />
+}
+
+interface DeferredPageProps {
+  children: ReactNode
+  id?: string
+  title: string
+}
+
+function DeferredPage({ children, id, title }: DeferredPageProps) {
+  return (
+    <div className="legal-page" id="top">
+      <a className="skip-link" href="#deferred-main">Skip to page content</a>
+      <PublicHeader />
+      <main className="deferred-page" id="deferred-main">
+        <p className="eyebrow">Public page shell</p>
+        <h1>{title}</h1>
+        <p className="deferred-page__intro">This page is intentionally deferred until the final owner and legal-approved visual/content design is supplied.</p>
+        <section className="deferred-page__notice" id={id}>
+          <h2>Content pending final owner/legal approval</h2>
+          {children}
+        </section>
+      </main>
+      <PublicFooter />
+    </div>
+  )
+}
+
+export function RefundPage() {
+  return (
+    <DeferredPage title="Refund Policy">
+      <p>Refund windows, eligibility, billing provider, and regional consumer-rights language have not been approved yet. No refund promise is made by this shell.</p>
+    </DeferredPage>
+  )
+}
+
+export function SupportPage() {
+  return (
+    <DeferredPage id="login" title="Support">
+      <p>For general support questions, email <a href="mailto:support@veinhealth.co">support@veinhealth.co</a>.</p>
+      <p>Do not send sensitive health documents, medication details, symptoms, identity documents, passwords, or payment information through a general email until the final support workflow is published.</p>
+      <p id="download">The web login and mobile-store download destinations remain deferred until approved routes and listings are available.</p>
+    </DeferredPage>
+  )
 }

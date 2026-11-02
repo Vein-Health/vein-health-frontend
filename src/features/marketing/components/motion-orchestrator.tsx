@@ -3,14 +3,13 @@ import { useEffect } from 'react'
 import { usePrefersReducedMotion } from '../hooks/use-prefers-reduced-motion'
 
 const revealSelector = [
-  '.section-heading',
-  '.story',
-  '.dashboard-reference',
-  '.feature-carousel__viewport',
-  '.pricing-card',
-  '.faq-accordion__item',
+  '.landing-section__heading',
+  '.split-section',
+  '.reference-preview',
+  '.beat-section__media',
+  '.faq-list__item',
   '.closing-cta',
-  '.public-footer__top',
+  '.public-footer',
 ].join(',')
 
 export function MotionOrchestrator() {

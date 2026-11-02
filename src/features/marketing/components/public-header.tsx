@@ -2,30 +2,29 @@ import { Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { navigationItems } from '../data'
-import { BrandMark } from './mascot-moment'
+import { BrandMark } from './brand-mark'
 
 export function PublicHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
-    const updateHeader = () => setIsScrolled(window.scrollY > 36)
+    const updateHeader = () => setIsScrolled(window.scrollY > 24)
     updateHeader()
     window.addEventListener('scroll', updateHeader, { passive: true })
-
     return () => window.removeEventListener('scroll', updateHeader)
   }, [])
 
   useEffect(() => {
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsMenuOpen(false)
-      }
+      if (event.key === 'Escape') setIsMenuOpen(false)
     }
 
     document.addEventListener('keydown', closeOnEscape)
     return () => document.removeEventListener('keydown', closeOnEscape)
   }, [])
+
+  const closeMenu = () => setIsMenuOpen(false)
 
   return (
     <header
@@ -34,35 +33,30 @@ export function PublicHeader() {
       data-scrolled={isScrolled ? 'true' : 'false'}
     >
       <div className="public-header__bar">
-        <a
-          aria-label="Vein Health home"
-          className="brand-lockup"
-          data-companion-origin
-          href="#top"
-          onClick={() => setIsMenuOpen(false)}
-        >
-          <BrandMark eager size={32} />
+        <a aria-label="Vein Health home" className="brand-lockup" href="/" onClick={closeMenu}>
+          <BrandMark eager size={31} />
           <span>Vein Health</span>
         </a>
 
         <nav aria-label="Primary navigation" className="public-header__desktop-nav">
           {navigationItems.map((item) => (
-            <a href={item.href} key={item.href}>
-              {item.label}
-            </a>
+            <a href={item.href} key={item.href}>{item.label}</a>
           ))}
         </nav>
 
-        <button
-          aria-controls="mobile-navigation"
-          aria-expanded={isMenuOpen}
-          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-          className="public-header__menu-button"
-          onClick={() => setIsMenuOpen((open) => !open)}
-          type="button"
-        >
-          {isMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-        </button>
+        <div className="public-header__actions">
+          <a className="public-header__login" href="/support#login">Login</a>
+          <button
+            aria-controls="mobile-navigation"
+            aria-expanded={isMenuOpen}
+            aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            className="public-header__menu-button"
+            onClick={() => setIsMenuOpen((open) => !open)}
+            type="button"
+          >
+            {isMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+          </button>
+        </div>
       </div>
 
       <nav
@@ -72,14 +66,11 @@ export function PublicHeader() {
         id="mobile-navigation"
       >
         {navigationItems.map((item) => (
-          <a
-            href={item.href}
-            key={item.href}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            {item.label}
-          </a>
+          <a href={item.href} key={item.href} onClick={closeMenu}>{item.label}</a>
         ))}
+        <a className="public-header__mobile-login" href="/support#login" onClick={closeMenu}>
+          Login
+        </a>
       </nav>
     </header>
   )
