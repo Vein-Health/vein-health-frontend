@@ -167,6 +167,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
 
 .landing-section { width: min(1240px, calc(100% - 2rem)); margin: 0 auto; padding: clamp(4rem, 6vw, 5rem) 0; scroll-margin-top: 7rem; }
 .landing-section--tight { padding-block: clamp(3rem, 6vw, 5rem); }
+.feature-section { padding-block: clamp(2rem, 3vw, 2.75rem); }
 .landing-section--centered { text-align: center; }
 .landing-section__heading h2, .section-title, .split-section__copy h3 {
   display: flex;
@@ -183,8 +184,10 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
 .landing-section__heading--centered h2 { justify-content: center; }
 .section-lede { max-width: 32.5rem; margin: .5rem 0 4rem; color: var(--slate); font-size: 16px; line-height: 1.6; }
 .landing-section--centered .section-lede { margin: .5rem auto 3rem; }
+.feature-section .section-lede { margin-bottom: 1.5rem; }
 
 .split-section { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; margin-top: clamp(2.5rem, 4vw, 4.5rem); }
+.feature-section .split-section { margin-top: clamp(1.25rem, 2.5vw, 2.5rem); }
 .landing-section > .section-lede + .split-section { margin-top: 0; }
 .split-section__copy { min-width: 0; }
 .split-section__copy h3 { margin: 0 0 .875rem; font-size: clamp(24px, 3.5vw, 34px); font-weight: 800; letter-spacing: -.5px; line-height: 1.15; }
@@ -200,6 +203,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
 .feature-overview { background: #fafaf9; }
 .feature-overview > .eyebrow { margin-bottom: 1.25rem; }
 .feature-overview__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; margin-top: 0; padding: clamp(3rem, 6vw, 5rem) 0; border-top: 1px solid var(--line); text-align: left; }
+.feature-section .feature-overview__row { padding-block: clamp(1.5rem, 3vw, 2.5rem); }
 .feature-record-preview { display: flex; min-height: clamp(19rem, 36vw, 27.5rem); align-items: center; justify-content: center; padding: clamp(1.75rem, 4vw, 3rem); border-radius: 1.5rem; background: linear-gradient(160deg, #f0f5ff 0%, #e8eff9 100%); }
 .feature-record-preview__stack { display: grid; width: min(100%, 21.25rem); gap: .7rem; }
 .feature-record-preview__card { display: flex; align-items: center; gap: .8rem; padding: 1rem 1.1rem; border-radius: 1rem; background: #fff; box-shadow: 0 8px 24px rgb(15 23 42 / 6%); color: var(--ink); font-size: .75rem; }
@@ -339,14 +343,20 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
   .hero-actions .button { min-height: 2.8rem; padding: .75rem 1rem; font-size: .82rem; }
   .landing-section { width: min(100% - 2rem, 580px); padding-block: 3.5rem; }
   .landing-section--tight { padding-block: 2.75rem; }
+  .feature-section { padding-block: 1.75rem; }
   .landing-section__heading h2, .split-section__copy h3 { font-size: 24px; letter-spacing: -.6px; line-height: 1.2; }
   .section-lede, .split-section__copy > p { font-size: 14px; line-height: 1.55; }
-  .split-section { grid-template-columns: 1fr; margin-top: 3rem; }
-  .split-section--review .split-section__copy { order: 1; }
-  .split-section--review .reference-media { order: 2; }
+  .split-section { display: flex; flex-direction: column; gap: 2.25rem; margin-top: 3rem; }
+  .feature-section .split-section { gap: 1.25rem; margin-top: 1.5rem; }
+  .split-section > .reference-media, .split-section > .reference-preview { order: 1; width: 100%; }
+  .split-section > .split-section__copy { order: 2; width: 100%; }
   .reference-media { border-radius: 1.7rem; }
   .reference-preview { margin-top: 2.5rem; border-radius: 1.7rem; }
-  .feature-overview__row { grid-template-columns: 1fr; gap: 2rem; }
+  .feature-section .reference-preview { margin-top: 1.25rem; }
+  .feature-overview__row { display: flex; flex-direction: column; gap: 2rem; }
+  .feature-section .feature-overview__row { gap: 1rem; padding-block: 1.5rem; }
+  .feature-overview__row > .feature-record-preview { order: 1; width: 100%; }
+  .feature-overview__row > .split-section__copy { order: 2; width: 100%; }
   .feature-record-preview { min-height: 19rem; }
   .reference-accordion__trigger { padding: 1rem .85rem; font-size: 14px; }
   .reference-accordion__content p { padding-inline: .85rem; font-size: 14px; }

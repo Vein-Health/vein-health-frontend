@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test'
 test('the public landing page renders the corrected section flow', async ({ page }) => {
   await page.goto('/')
 
-  await expect(page).toHaveTitle('Vein Health - Your health companion')
+  await expect(page).toHaveTitle('Vein Health - Your health companion for understanding and organizing your care')
   await expect(page.getByRole('heading', { level: 1, name: /Understanding your health/i })).toBeAttached()
   await expect(page.getByRole('heading', { name: 'How Vein Health works' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Feel more in control of your health' })).toBeAttached()
@@ -51,6 +51,14 @@ test('the narrow layout provides an accessible menu and keeps the hero image loa
   await mobileNavigation.getByRole('link', { name: 'Features' }).click()
   await expect(page.locator('.public-header__menu-button')).toHaveAttribute('aria-expanded', 'false')
   await expect(page.locator('#features')).toBeInViewport()
+
+  for (const selector of ['.split-section--scan', '.split-section--review', '.split-section--understand', '.split-section--medications', '.split-section--timeline', '.split-section--safety', '.feature-overview__row']) {
+    const mobileOrder = await page.locator(selector).evaluate((element) => Array.from(element.children)
+      .sort((first, second) => Number.parseInt(getComputedStyle(first).order) - Number.parseInt(getComputedStyle(second).order))
+      .map((child) => String(child.className)))
+    expect(mobileOrder[0]).toMatch(/reference-media|reference-preview|feature-record-preview/)
+    expect(mobileOrder[1]).toContain('split-section__copy')
+  }
 })
 
 test('reduced motion disables non-essential entrance movement', async ({ page }) => {
