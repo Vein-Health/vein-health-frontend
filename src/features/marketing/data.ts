@@ -60,13 +60,13 @@ export const faqItems: readonly FaqItem[] = [
     id: 'free-trial',
     question: 'Is there a free trial?',
     answer:
-      'The approved direction is to start with 3 days free. Exact store availability, subscription terms, and billing details will be shown in the approved mobile-store listing before any purchase is made.',
+      'Yes. You can start a 3-day free trial by adding a valid payment card. Paid access begins after the trial unless you cancel beforehand; without a card, the trial cannot be activated.',
   },
   {
     id: 'cancel-anytime',
     question: 'Can I cancel anytime?',
     answer:
-      'You will be able to manage or cancel a subscription through the approved store account controls. Final renewal, cancellation, and refund terms will be published before paid access is enabled.',
+      'Yes. You can cancel at any time through your Google Play or App Store subscription settings. Cancel before the 3-day trial ends to avoid the first charge; after billing begins, cancellation stops the next renewal.',
   },
   {
     id: 'what-is-beat',

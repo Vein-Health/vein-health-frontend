@@ -1,7 +1,8 @@
 import { faqItems } from './data'
 import { getAppDownloadUrl } from './app-download'
 import { AppIntro } from './components/app-intro'
-import { BrandMark } from './components/brand-mark'
+import { ContourField } from './components/contour-field'
+import { CompanionGuide } from './components/companion-guide'
 import { MotionOrchestrator } from './components/motion-orchestrator'
 import { PublicFooter } from './components/public-footer'
 import { PublicHeader } from './components/public-header'
@@ -49,9 +50,9 @@ const understandQuestions = [
 export function LandingPage() {
   return (
     <div className="landing-page" id="top">
+      <ContourField />
       <AppIntro />
       <MotionOrchestrator />
-      <a className="skip-link" href="#main-content">Skip to main content</a>
       <PublicHeader />
 
       <main id="main-content">
@@ -60,6 +61,7 @@ export function LandingPage() {
         <ReviewSection />
         <UnderstandSection />
         <ProductBridgeSection />
+        <FeatureOverviewSection />
         <MedicationSection />
         <TimelineSection />
         <SafetySection />
@@ -68,6 +70,7 @@ export function LandingPage() {
         <ClosingCta />
       </main>
 
+      <CompanionGuide />
       <PublicFooter />
     </div>
   )
@@ -79,17 +82,16 @@ function HeroSection() {
       <figure className="hero-art">
         <img
           alt="A family sharing a warm moment in a flower-filled meadow"
-          height="1200"
+          height="941"
           loading="eager"
           src="/assets/landing/hero-family.png"
-          width="2138"
+          width="1672"
         />
         <div className="hero-copy">
           <h1 id="hero-heading">Understanding your health shouldn't feel impossible.</h1>
           <p>Scan prescriptions and lab results, understand what they mean, and keep your health organized in one place.</p>
           <div className="hero-actions">
             <a className="button button--primary" href={getAppDownloadUrl()}>Download Vein Health</a>
-            <a className="button button--hero-secondary" href="#how-it-works">See how it works</a>
           </div>
         </div>
       </figure>
@@ -100,6 +102,7 @@ function HeroSection() {
 function HowItWorksSection() {
   return (
     <section aria-labelledby="how-it-works-heading" className="landing-section" id="how-it-works">
+      <CompanionWaypoint cloud="Let’s start with the original document." state="upload" />
       <SectionHeader id="how-it-works-heading" title="How Vein Health works" />
       <p className="section-lede">Upload your health information, review the details, and get clear explanations that help you stay organized.</p>
       <div className="split-section split-section--scan">
@@ -117,6 +120,7 @@ function HowItWorksSection() {
 function ReviewSection() {
   return (
     <section aria-labelledby="review-heading" className="landing-section landing-section--tight">
+      <CompanionWaypoint cloud="Check the details before they become part of your record." state="verify" />
       <div className="split-section split-section--review">
         <div className="split-section__copy">
           <SectionTitle id="review-heading" title="Review and verify" />
@@ -132,6 +136,7 @@ function ReviewSection() {
 function UnderstandSection() {
   return (
     <section aria-labelledby="understand-heading" className="landing-section landing-section--tight">
+      <CompanionWaypoint cloud="Clear explanations can make the next conversation easier." state="understand" />
       <div className="split-section split-section--understand">
         <ReferenceMedia alt="A person reviewing a lab report beside a phone explanation preview" src="/assets/landing/understand-organized.png" />
         <div className="split-section__copy">
@@ -146,27 +151,77 @@ function UnderstandSection() {
 
 function ProductBridgeSection() {
   return (
-    <section aria-labelledby="features-heading" className="landing-section landing-section--centered" id="features">
-      <SectionHeader id="features-heading" title="Feel more in control of your health" />
+    <section aria-labelledby="features-heading" className="landing-section landing-section--centered" id="product-preview">
+      <CompanionWaypoint cloud="Scan it, understand it, keep it organized." state="carousel" />
+      <SectionHeader centered id="features-heading" title="Feel more in control of your health" />
       <p className="section-lede">Scan it. Understand it. Keep it organized.</p>
-      <ReferencePreview
+        <ReferencePreview
         alt="Approved sample visual showing a lab report scanned on one phone and explained on another"
         className="reference-preview--phones"
+          height={882}
         src="/assets/landing/phone-flow-full.png"
+          width={1220}
       />
       <p className="preview-disclaimer">Sample product preview. Vein Health explains your records. It does not diagnose or treat.</p>
     </section>
   )
 }
 
+function FeatureOverviewSection() {
+  return (
+    <section aria-labelledby="features-overview-heading" className="landing-section landing-section--centered feature-overview" id="features">
+      <CompanionWaypoint cloud="Everything important can stay together in one place." state="carousel" />
+      <p className="eyebrow eyebrow--pill">Features</p>
+      <SectionHeader centered id="features-overview-heading" title="Everything you need, in one place" />
+      <p className="section-lede">Understand your health, remember what matters, and keep track of it without the stress.</p>
+      <div className="feature-overview__row">
+        <div className="split-section__copy">
+          <SectionTitle title="Understand your health records" />
+          <p>Keep prescriptions, lab results, medical records, and other health information together. Vee helps explain what they mean in plain language.</p>
+        </div>
+        <FeatureRecordsPreview />
+      </div>
+    </section>
+  )
+}
+
+function FeatureRecordsPreview() {
+  return (
+    <div aria-label="Illustrative product preview showing a record being checked and explained" className="feature-record-preview">
+      <div className="feature-record-preview__stack">
+        <div className="feature-record-preview__card feature-record-preview__card--upload">
+          <span className="feature-record-preview__icon">□</span>
+          <span><strong>Prescription uploaded</strong><small>Illustrative sample · Oct 12</small></span>
+          <b>Verified</b>
+        </div>
+        <span aria-hidden="true" className="feature-record-preview__arrow">↓</span>
+        <div className="feature-record-preview__card feature-record-preview__card--found">
+          <small>VEE FOUND</small>
+          <span><strong>Panadol</strong><b>500mg</b></span>
+          <span><strong>Frequency</strong><em>Twice daily</em></span>
+          <span><strong>Duration</strong><em>30 days</em></span>
+        </div>
+        <span aria-hidden="true" className="feature-record-preview__arrow">↓</span>
+        <div className="feature-record-preview__card feature-record-preview__card--explanation">
+          <strong>● Vee</strong>
+          <span>Illustrative explanation from a verified record. Always check the original source.</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function MedicationSection() {
   return (
     <section aria-labelledby="medications-heading" className="landing-section landing-section--tight" id="medications">
+      <CompanionWaypoint cloud="A simple schedule helps you keep the routine visible." state="understand" />
       <div className="split-section split-section--medications">
         <ReferencePreview
           alt="Approved sample medication schedule visual"
           className="reference-preview--schedule"
+          height={810}
           src="/assets/landing/medication-schedule-reference.png"
+          width={1020}
         />
         <div className="split-section__copy">
           <SectionTitle id="medications-heading" title="Stay on top of your medications" />
@@ -181,6 +236,7 @@ function MedicationSection() {
 function TimelineSection() {
   return (
     <section aria-labelledby="timeline-heading" className="landing-section landing-section--tight">
+      <CompanionWaypoint cloud="Your health story is easier to follow when it is together." state="carousel" />
       <div className="split-section split-section--timeline">
         <div className="split-section__copy">
           <SectionTitle id="timeline-heading" title="See your health journey clearly" />
@@ -189,7 +245,9 @@ function TimelineSection() {
         <ReferencePreview
           alt="Approved sample health timeline visual"
           className="reference-preview--timeline"
+          height={800}
           src="/assets/landing/health-timeline-reference.png"
+          width={1030}
         />
       </div>
     </section>
@@ -199,11 +257,14 @@ function TimelineSection() {
 function SafetySection() {
   return (
     <section aria-labelledby="safety-heading" className="landing-section landing-section--tight">
+      <CompanionWaypoint cloud="If something needs attention, I’ll help make the next step clearer." state="verify" />
       <div className="split-section split-section--safety">
         <ReferencePreview
           alt="Approved sample safety guidance visual"
           className="reference-preview--safety"
+          height={760}
           src="/assets/landing/safety-reference.png"
+          width={1030}
         />
         <div className="split-section__copy">
           <SectionTitle id="safety-heading" title="Know when something needs attention" />
@@ -217,6 +278,7 @@ function SafetySection() {
 function BeatSection() {
   return (
     <section aria-labelledby="beat-heading" className="landing-section landing-section--centered beat-section" id="beat">
+      <CompanionWaypoint cloud="You choose what to share and can change that choice." state="understand" />
       <p className="eyebrow eyebrow--pill">BEAT</p>
       <SectionHeader id="beat-heading" title="Share your health information with someone you trust." />
       <p className="section-lede">Choose what they can see. Stay connected without explaining everything.</p>
@@ -231,6 +293,7 @@ function BeatSection() {
 function FaqSection() {
   return (
     <section aria-labelledby="faq-heading" className="landing-section landing-section--faq" id="faq">
+      <CompanionWaypoint cloud="Let’s clear up the common questions." state="faq" />
       <SectionHeader centered id="faq-heading" title="Common questions" />
       <div className="faq-list">
         {faqItems.map((item) => <FaqRow item={item} key={item.id} />)}
@@ -261,13 +324,17 @@ function ClosingCta() {
 function SectionHeader({ centered = false, id, title }: { centered?: boolean; id: string; title: string }) {
   return (
     <div className={`landing-section__heading${centered ? ' landing-section__heading--centered' : ''}`}>
-      <h2 id={id}>{title} <BrandMark size={40} /></h2>
+      <h2 id={id}>{title}</h2>
     </div>
   )
 }
 
 function SectionTitle({ id, title }: { id?: string; title: string }) {
-  return <h3 id={id}>{title} <BrandMark size={35} /></h3>
+  return <h3 id={id}>{title}</h3>
+}
+
+function CompanionWaypoint({ cloud, state }: { cloud: string; state: import('./types').MascotState }) {
+  return <span aria-hidden="true" className="companion-waypoint" data-companion-cloud={cloud} data-companion-state={state} data-companion-waypoint />
 }
 
 function ReferenceMedia({ alt, src }: { alt: string; src: string }) {
@@ -278,10 +345,10 @@ function ReferenceMedia({ alt, src }: { alt: string; src: string }) {
   )
 }
 
-function ReferencePreview({ alt, className, src }: { alt: string; className: string; src: string }) {
+function ReferencePreview({ alt, className, height, src, width }: { alt: string; className: string; height: number; src: string; width: number }) {
   return (
     <figure className={`reference-preview ${className}`}>
-      <img alt={alt} height="800" loading="lazy" src={src} width="1030" />
+      <img alt={alt} height={height} loading="lazy" src={src} width={width} />
     </figure>
   )
 }

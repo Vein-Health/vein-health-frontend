@@ -3,6 +3,8 @@ export interface NavigationItem {
   label: string
 }
 
+export type MascotState = 'intro' | 'upload' | 'verify' | 'understand' | 'carousel' | 'faq' | 'footer'
+
 export interface FaqItem {
   answer: string
   id: string

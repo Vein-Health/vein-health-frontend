@@ -34,7 +34,7 @@ export function PublicHeader() {
       data-scrolled={isScrolled ? 'true' : 'false'}
     >
       <div className="public-header__bar">
-        <a aria-label="Vein Health home" className="brand-lockup" href="/" onClick={closeMenu}>
+          <a aria-label="Vein Health home" className="brand-lockup" data-companion-origin href="/" onClick={closeMenu}>
           <BrandMark eager size={31} />
           <span>Vein Health</span>
         </a>

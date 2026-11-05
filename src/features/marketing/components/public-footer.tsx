@@ -9,7 +9,7 @@ const legalLinks = [
   { to: '/terms', label: 'Terms' },
   { to: '/cookies', label: 'Cookies' },
   { to: '/refund', label: 'Refund Policy' },
-  { to: '/support', label: 'Support' },
+  { to: 'mailto:support@veinhealth.co', label: 'Support' },
 ] as const
 
 function AppleStoreMark() {
@@ -70,9 +70,10 @@ export function PublicFooter() {
           {navigationItems.map((item) => <a href={item.href} key={item.href}>{item.label}</a>)}
         </FooterColumn>
         <FooterColumn title="Connect">
-          <a href="https://www.instagram.com/" rel="noreferrer" target="_blank">Instagram</a>
-          <a href="https://www.linkedin.com/" rel="noreferrer" target="_blank">LinkedIn</a>
-          <a href="https://x.com/" rel="noreferrer" target="_blank">X (Twitter)</a>
+          <a href="https://www.instagram.com/vein_healthai/" rel="noreferrer" target="_blank">Instagram</a>
+          <a href="https://www.tiktok.com/@vein_healthai?is_from_webapp=1&amp;sender_device=pc" rel="noreferrer" target="_blank">TikTok</a>
+          <a href="https://www.facebook.com/veinhealthai" rel="noreferrer" target="_blank">Facebook</a>
+          <a href="https://x.com/vein_healthai" rel="noreferrer" target="_blank">X</a>
         </FooterColumn>
       </div>
 
@@ -83,7 +84,6 @@ export function PublicFooter() {
         </div>
         <nav aria-label="Legal information" className="public-footer__legal">
           {legalLinks.map((item) => <a href={item.to} key={item.to}>{item.label}</a>)}
-          <a href="mailto:support@veinhealth.co">support@veinhealth.co</a>
         </nav>
       </div>
     </footer>
