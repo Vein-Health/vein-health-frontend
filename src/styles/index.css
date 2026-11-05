@@ -281,7 +281,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
 .public-footer__legal { display: flex; flex-wrap: wrap; justify-content: end; gap: .8rem 1.25rem; }
 .public-footer__legal a { color: var(--slate); text-decoration: none; }
 
-.reveal-item { opacity: 0; transform: translate3d(0, 2.1rem, 0) scale(.985); filter: blur(3px); transition: opacity 760ms calc(var(--reveal-order, 0) * 95ms) ease, transform 900ms calc(var(--reveal-order, 0) * 95ms) cubic-bezier(.2,.8,.2,1), filter 760ms calc(var(--reveal-order, 0) * 95ms) ease; }
+.reveal-item { opacity: 0; transform: translate3d(0, 1.2rem, 0); filter: blur(3px); transition: opacity 420ms calc(var(--reveal-order, 0) * 45ms) ease-out, transform 520ms calc(var(--reveal-order, 0) * 45ms) cubic-bezier(.2,.8,.2,1), filter 360ms calc(var(--reveal-order, 0) * 45ms) ease-out; }
 .reveal-item[data-revealed='true'] { opacity: 1; transform: none; filter: none; }
 
 .legal-page { min-height: 100vh; background: linear-gradient(180deg, #fff, #f7faff); }

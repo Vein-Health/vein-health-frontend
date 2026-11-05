@@ -26,7 +26,7 @@ export function MotionOrchestrator() {
 
     elements.forEach((element, index) => {
       element.classList.add('reveal-item')
-      element.style.setProperty('--reveal-order', String(index % 4))
+      element.style.setProperty('--reveal-order', String(index % 3))
     })
 
     if (prefersReducedMotion || typeof IntersectionObserver === 'undefined') {
@@ -43,7 +43,7 @@ export function MotionOrchestrator() {
           }
         })
       },
-      { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+      { rootMargin: '0px 0px -4% 0px', threshold: 0.08 },
     )
 
     elements.forEach((element) => observer.observe(element))
