@@ -1,6 +1,6 @@
 # Waitlist storage with Google Sheets
 
-The public waitlist form sends one URL-encoded field, `email`, to the Google Apps Script Web App URL configured as `VITE_WAITLIST_ENDPOINT`. The browser uses a simple `POST` request with `mode: no-cors`, which avoids a CORS preflight for Apps Script. The request is treated as successful when the browser accepts it; Apps Script should validate the email and append it to the sheet.
+The public waitlist form sends one URL-encoded field, `email`, to the Google Apps Script Web App URL configured as `VITE_WAITLIST_ENDPOINT`. The browser submits a native hidden `POST` form to an invisible iframe, which avoids browser CORS handling while still sending the same form data Apps Script expects. Apps Script validates the email and appends it to the sheet.
 
 ## 1. Create the sheet
 

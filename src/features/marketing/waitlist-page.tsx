@@ -35,9 +35,31 @@ export function WaitlistPage() {
     setErrorMessage('')
 
     try {
-      const formData = new URLSearchParams()
-      formData.set('email', normalizedEmail)
-      await fetch(endpoint, { body: formData, method: 'POST', mode: 'no-cors' })
+      const frameName = `waitlist-submit-${Date.now()}`
+      const iframe = document.createElement('iframe')
+      const submissionForm = document.createElement('form')
+      const emailInput = document.createElement('input')
+
+      iframe.name = frameName
+      iframe.title = 'Waitlist submission'
+      iframe.hidden = true
+
+      submissionForm.action = endpoint
+      submissionForm.method = 'POST'
+      submissionForm.target = frameName
+      submissionForm.hidden = true
+
+      emailInput.name = 'email'
+      emailInput.type = 'email'
+      emailInput.value = normalizedEmail
+
+      submissionForm.append(emailInput)
+      document.body.append(iframe, submissionForm)
+      submissionForm.submit()
+      window.setTimeout(() => {
+        iframe.remove()
+        submissionForm.remove()
+      }, 10_000)
       setSubmissionState('success')
     } catch {
       setSubmissionState('error')
