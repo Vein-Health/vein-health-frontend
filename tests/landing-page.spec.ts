@@ -53,9 +53,11 @@ test('the narrow layout provides an accessible menu and keeps the hero image loa
 
 test('reduced motion disables non-essential entrance movement', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
-  await page.goto('/', { waitUntil: 'commit' })
+  await page.goto('/', { waitUntil: 'domcontentloaded' })
 
   await expect.poll(() => page.evaluate(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)).toBe(true)
+  await expect(page.locator('#main-content')).toBeAttached()
+  await expect.poll(() => page.locator('.reveal-item').count()).toBeGreaterThan(0)
   await expect(page.locator('.reveal-item').first()).toHaveAttribute('data-revealed', 'true')
   await expect(page.locator('.companion-guide')).toHaveCount(1)
 })
