@@ -1,5 +1,4 @@
 import { faqItems } from './data'
-import { getAppDownloadUrl } from './app-download'
 import { AppIntro } from './components/app-intro'
 import { ContourField } from './components/contour-field'
 import { CompanionGuide } from './components/companion-guide'
@@ -91,7 +90,7 @@ function HeroSection() {
           <h1 id="hero-heading">Understanding your health shouldn't feel impossible.</h1>
           <p>Scan prescriptions and lab results, understand what they mean, and keep your health organized in one place.</p>
           <div className="hero-actions">
-            <a className="button button--primary" href={getAppDownloadUrl()}>Download Vein Health</a>
+            <a className="button button--primary" href="/waitlist">Join waitlist</a>
           </div>
         </div>
       </figure>
@@ -315,7 +314,7 @@ function ClosingCta() {
     <section aria-labelledby="closing-heading" className="closing-cta">
       <h2 id="closing-heading">Your health, easier to understand.</h2>
       <p>Scan your health information, stay organized, and keep track of what matters.</p>
-      <a className="button button--primary" href={getAppDownloadUrl()}>Download Vein Health</a>
+      <a className="button button--primary" href="/waitlist">Join waitlist</a>
       <span>Start with <strong>3 days free.</strong></span>
     </section>
   )

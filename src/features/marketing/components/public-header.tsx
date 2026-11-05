@@ -1,7 +1,6 @@
 import { Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { getAppDownloadUrl } from '../app-download'
 import { navigationItems } from '../data'
 import { BrandMark } from './brand-mark'
 
@@ -46,7 +45,7 @@ export function PublicHeader() {
         </nav>
 
         <div className="public-header__actions">
-          <a className="public-header__get-app" href={getAppDownloadUrl()}>Get App</a>
+          <a className="public-header__waitlist" href="/waitlist">Join waitlist</a>
           <button
             aria-controls="mobile-navigation"
             aria-expanded={isMenuOpen}
@@ -69,8 +68,8 @@ export function PublicHeader() {
         {navigationItems.map((item) => (
           <a href={item.href} key={item.href} onClick={closeMenu}>{item.label}</a>
         ))}
-        <a className="public-header__mobile-get-app" href={getAppDownloadUrl()} onClick={closeMenu}>
-          Get App
+        <a className="public-header__mobile-waitlist" href="/waitlist" onClick={closeMenu}>
+          Join waitlist
         </a>
       </nav>
     </header>

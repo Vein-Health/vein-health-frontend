@@ -46,7 +46,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
   outline-offset: 4px;
 }
 
-.landing-page, .legal-page { position: relative; min-height: 100vh; }
+.landing-page, .legal-page, .waitlist-page { position: relative; min-height: 100vh; }
 
 .contour-field { position: absolute; z-index: 0; inset: 0; overflow: hidden; color: #cfd5de; opacity: .52; pointer-events: none; }
 .contour-field__shape { position: absolute; display: block; width: min(19rem, 27vw); height: auto; }
@@ -54,7 +54,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
 .contour-field__shape--top-right { top: 7%; right: -1.25rem; transform: rotate(-8deg); }
 .contour-field__shape--middle-left { top: 47%; left: -1.25rem; transform: rotate(9deg) scaleX(-1); }
 .contour-field__shape--lower-right { top: 82%; right: -1.5rem; transform: rotate(-6deg); }
-.landing-page > :not(.contour-field):not(.app-intro), .legal-page > :not(.contour-field):not(.app-intro) { position: relative; z-index: 1; }
+.landing-page > :not(.contour-field):not(.app-intro), .legal-page > :not(.contour-field):not(.app-intro), .waitlist-page > :not(.contour-field):not(.app-intro) { position: relative; z-index: 1; }
 
 .app-intro {
   position: fixed;
@@ -128,7 +128,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
 .public-header__desktop-nav a:hover, .public-header__mobile-nav a:hover { color: var(--ink); }
 
 .public-header__actions { display: flex; align-items: center; gap: .55rem; }
-.public-header__get-app {
+.public-header__waitlist {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -260,15 +260,9 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
 .closing-cta > span strong { color: var(--slate); }
 
 .public-footer { border-top: 1px solid var(--line); background: #fff; }
-.public-footer__download { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 4.5rem max(2rem, calc((100% - 1320px) / 2)); border-bottom: 1px solid var(--line); }
-.public-footer__download h2 { margin: 0; font-size: 1.4rem; letter-spacing: -.04em; }
-.public-footer__download p { max-width: 38rem; margin: .9rem 0 0; color: var(--slate); font-size: 1.15rem; line-height: 1.55; }
-.store-badges { display: flex; flex-wrap: wrap; gap: .8rem; }
-.store-badge { display: inline-flex; min-width: 10.2rem; min-height: 3.9rem; align-items: center; gap: .7rem; padding: .65rem .9rem; border-radius: .8rem; background: #050505; color: #fff; }
-.store-badge__mark { width: 1.7rem; height: 1.9rem; flex: 0 0 auto; }
-.store-badge span:last-child { display: grid; gap: .15rem; text-align: left; }
-.store-badge small { font-size: .48rem; letter-spacing: .06em; }
-.store-badge strong { font-size: 1.05rem; line-height: 1; }
+.public-footer__waitlist { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 4.5rem max(2rem, calc((100% - 1320px) / 2)); border-bottom: 1px solid var(--line); }
+.public-footer__waitlist h2 { margin: 0; font-size: 1.4rem; letter-spacing: -.04em; }
+.public-footer__waitlist p { max-width: 38rem; margin: .9rem 0 0; color: var(--slate); font-size: 1.15rem; line-height: 1.55; }
 .public-footer__content { display: grid; grid-template-columns: 1.4fr repeat(2, 1fr); gap: 3rem; max-width: 1320px; margin: 0 auto; padding: 4.6rem 2rem; }
 .public-footer__brand p { margin: 1.5rem 0 0; color: var(--slate); font-size: 15px; line-height: 1.6; }
 .public-footer__column { display: grid; align-content: start; gap: 1rem; }
@@ -318,11 +312,11 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
 
 @media (max-width: 900px) {
   .public-header { width: min(720px, calc(100% - 1.5rem)); }
-  .public-header__desktop-nav, .public-header__get-app { display: none; }
+  .public-header__desktop-nav, .public-header__waitlist { display: none; }
   .public-header__menu-button { display: inline-flex; }
   .public-header__mobile-nav { display: grid; gap: .2rem; margin-top: .55rem; padding: .8rem; border: 1px solid var(--line); border-radius: 1.5rem; background: rgb(255 255 255 / 98%); box-shadow: var(--shadow); }
   .public-header__mobile-nav a { padding: .85rem 1rem; border-radius: .9rem; }
-  .public-header__mobile-get-app { background: var(--ink); color: #fff !important; text-align: center; }
+  .public-header__mobile-waitlist { background: var(--ink); color: #fff !important; text-align: center; }
   .hero-section { width: min(1800px, calc(100% - 2rem)); margin-top: 1rem; }
   .split-section { gap: 3rem; }
   .public-footer__content { grid-template-columns: repeat(2, 1fr); }
@@ -362,11 +356,16 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
   .reference-accordion__content p { padding-inline: .85rem; font-size: 14px; }
   .beat-section .landing-section__heading h2 { max-width: none; }
   .faq-list { margin-top: 2.5rem; }
-  .public-footer__download, .public-footer__bottom { align-items: flex-start; flex-direction: column; }
-  .public-footer__download { padding: 3.4rem 1.25rem; }
+  .public-footer__waitlist, .public-footer__bottom { align-items: flex-start; flex-direction: column; }
+  .public-footer__waitlist { padding: 3.4rem 1.25rem; }
   .public-footer__content { gap: 2.5rem 1.5rem; padding: 3.4rem 1.25rem; }
   .public-footer__bottom { padding-inline: 1.25rem; }
   .public-footer__legal { justify-content: flex-start; }
+  .waitlist-main { min-height: 40rem; padding-block: 6rem 4rem; }
+  .waitlist-card { padding: 2.25rem 1.25rem; border-radius: 1.8rem; }
+  .waitlist-card h1 { font-size: clamp(2.2rem, 11vw, 3.4rem); }
+  .waitlist-form { flex-direction: column; }
+  .waitlist-form input, .waitlist-form .button { width: 100%; }
   .legal-main, .deferred-page { width: min(100% - 2rem, 600px); padding-top: 4.5rem; }
   .legal-layout { grid-template-columns: 1fr; gap: 2rem; margin-top: 3rem; }
   .legal-toc { position: static; }
@@ -378,6 +377,26 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
   .reveal-item { opacity: 1; transform: none; filter: none; }
   .app-intro { animation: none; }
 }
+
+.waitlist-main { width: min(1180px, calc(100% - 2rem)); min-height: 48rem; margin: 0 auto; padding: clamp(8rem, 15vw, 12rem) 0 clamp(5rem, 10vw, 8rem); }
+.waitlist-card { width: min(100%, 48rem); margin: 0 auto; padding: clamp(2rem, 6vw, 5rem); border: 1px solid rgb(255 255 255 / 82%); border-radius: 2.5rem; background: rgb(255 255 255 / 84%); box-shadow: var(--shadow); backdrop-filter: blur(18px); text-align: center; }
+.waitlist-card .eyebrow { margin-bottom: 1.25rem; }
+.waitlist-card h1 { max-width: 15ch; margin: 0 auto; color: var(--ink); font-size: clamp(2.4rem, 6vw, 4.8rem); font-weight: 800; letter-spacing: -.08em; line-height: .98; }
+.waitlist-card > p { max-width: 38rem; margin: 1.5rem auto 0; color: var(--slate); font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.65; }
+.waitlist-perk { display: inline-flex; margin: 2rem auto 0; padding: .75rem 1.1rem; border: 1px solid #bfdbfe; border-radius: 999px; background: var(--pale-blue); color: var(--blue-deep); font-size: .9rem; font-weight: 800; }
+.waitlist-form { display: flex; max-width: 34rem; align-items: stretch; gap: .65rem; margin: 2rem auto 0; text-align: left; }
+.waitlist-form label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.waitlist-form input { min-width: 0; flex: 1; padding: 1rem 1.15rem; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink); outline: none; }
+.waitlist-form input:focus { border-color: #71a1ff; box-shadow: 0 0 0 4px rgb(113 161 255 / 18%); }
+.waitlist-form .button { border: 0; cursor: pointer; white-space: nowrap; }
+.waitlist-form .button:disabled { cursor: wait; opacity: .65; }
+.waitlist-form__message { margin: 1rem 0 0; color: #b42318; font-size: .9rem; text-align: center; }
+.waitlist-success { display: grid; justify-items: center; gap: .75rem; }
+.waitlist-success__icon { display: grid; width: 7rem; height: 7rem; place-items: center; border-radius: 50%; background: var(--blue); box-shadow: 0 20px 45px rgb(37 99 235 / 30%); color: #fff; animation: waitlist-success-pop 460ms cubic-bezier(.2,.8,.2,1) both; }
+.waitlist-success__icon svg { width: 3.5rem; height: 3.5rem; stroke-width: 3; }
+.waitlist-success h2 { margin: .75rem 0 0; font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -.06em; }
+.waitlist-success p { max-width: 32rem; margin: 0; color: var(--slate); line-height: 1.65; }
+@keyframes waitlist-success-pop { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: scale(1); } }
 
 /* Section companion restored from the original waypoint interaction. It stays at the edge so it never covers the reading flow. */
 .hero-art { height: clamp(32rem, 40vw, 37.5rem); }

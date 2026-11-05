@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-router'
 
 import { LandingPage } from '../../features/marketing'
+import { WaitlistPage } from '../../features/marketing/waitlist-page'
 import {
   CookiesPage,
   PrivacyPage,
@@ -54,6 +55,12 @@ const supportRoute = createRoute({
   component: SupportPage,
 })
 
+const waitlistRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/waitlist',
+  component: WaitlistPage,
+})
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   privacyRoute,
@@ -61,6 +68,7 @@ const routeTree = rootRoute.addChildren([
   cookiesRoute,
   refundRoute,
   supportRoute,
+  waitlistRoute,
 ])
 
 export const router = createRouter({ routeTree })

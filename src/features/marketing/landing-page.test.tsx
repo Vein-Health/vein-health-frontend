@@ -82,7 +82,7 @@ describe('new landing page', () => {
 
     expect(screen.queryByRole('link', { name: 'Pricing' })).not.toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Login' })).not.toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Get App' })).toHaveAttribute('href', expect.stringContaining('play.google.com'))
+    expect(screen.getAllByRole('link', { name: 'Join waitlist' }).every((link) => link.getAttribute('href') === '/waitlist')).toBe(true)
     const menuButton = screen.getByRole('button', { name: 'Open navigation menu' })
     fireEvent.click(menuButton)
     expect(screen.getByRole('navigation', { name: 'Mobile navigation' })).not.toHaveAttribute('hidden')
@@ -94,7 +94,7 @@ describe('new landing page', () => {
     const { container } = renderLanding()
 
     expect(container.querySelector('.reveal-item[data-revealed="true"]')).toBeInTheDocument()
-    expect(screen.getByText('Private by design')).toBeInTheDocument()
+    expect(screen.getByText('Be first to know')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Refund Policy' })).toHaveAttribute('href', '/refund')
     expect(screen.getByRole('link', { name: 'Support' })).toHaveAttribute('href', 'mailto:support@veinhealth.co')
     const footer = container.querySelector('footer')

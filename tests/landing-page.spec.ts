@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test'
 test('the public landing page renders the corrected section flow', async ({ page }) => {
   await page.goto('/')
 
-  await expect(page).toHaveTitle('Vein Health - Your health companion for understanding and organizing your care')
+  await expect(page).toHaveTitle('Vein Health | AI Companion to Understand & Organize Your Care')
   await expect(page.getByRole('heading', { level: 1, name: /Understanding your health/i })).toBeAttached()
   await expect(page.getByRole('heading', { name: 'How Vein Health works' })).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Feel more in control of your health' })).toBeAttached()
@@ -20,7 +20,7 @@ test('the public landing page renders the corrected section flow', async ({ page
   await expect(page.getByText('Starter')).toHaveCount(0)
   await expect(page.getByRole('link', { name: 'Login' })).toHaveCount(0)
   await expect(page.getByRole('link', { name: 'See how it works' })).toHaveCount(0)
-  await expect(page.getByRole('link', { name: 'Get App' }).first()).toHaveAttribute('href', /play\.google\.com/)
+  await expect(page.getByRole('link', { name: 'Join waitlist' }).first()).toHaveAttribute('href', '/waitlist')
   await expect(page.locator('img[src="/assets/landing/phone-flow-full.png"]')).toHaveCount(1)
   await expect(page.locator('img[src="/assets/landing/vee-bold.png"]').first()).toBeVisible()
   await expect(page.locator('.contour-field')).toHaveCount(1)
@@ -101,4 +101,15 @@ test('public legal and support routes share the footer', async ({ page }) => {
 
   await page.goto('/terms')
   await expect(page.getByRole('heading', { name: 'Google authentication and Google user data' })).toBeVisible()
+})
+
+test('waitlist route uses the public shell and accepts only an email field', async ({ page }) => {
+  await page.goto('/waitlist')
+
+  await expect(page.getByRole('heading', { name: 'Be part of what comes next.' })).toBeVisible()
+  await expect(page.getByText('10% off upon launch')).toBeVisible()
+  await expect(page.getByLabel('Email address')).toHaveAttribute('type', 'email')
+  await expect(page.getByRole('textbox')).toHaveCount(1)
+  await expect(page.getByRole('contentinfo')).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Join waitlist' }).first()).toHaveAttribute('href', '/waitlist')
 })

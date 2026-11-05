@@ -16,6 +16,7 @@ const revealSelector = [
   '.faq-list__item',
   '.closing-cta',
   '.public-footer',
+  '.waitlist-card',
 ].join(',')
 
 export function MotionOrchestrator() {
