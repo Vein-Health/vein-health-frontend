@@ -86,4 +86,11 @@ test('public legal and support routes share the footer', async ({ page }) => {
   await expect(page.getByRole('contentinfo').getByRole('link', { name: 'Support', exact: true })).toHaveAttribute('href', 'mailto:support@veinhealth.co')
   await expect(page.getByRole('contentinfo').getByRole('link', { name: 'support@veinhealth.co' })).toHaveCount(0)
   await expect(page.getByText(/do not send sensitive health documents/i)).toBeVisible()
+
+  await page.goto('/privacy')
+  await expect(page.getByRole('heading', { name: 'Google account data and OAuth' })).toBeVisible()
+  await expect(page.getByText(/not sell.*Google user data/i)).toBeVisible()
+
+  await page.goto('/terms')
+  await expect(page.getByRole('heading', { name: 'Google authentication and Google user data' })).toBeVisible()
 })
