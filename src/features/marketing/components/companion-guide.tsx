@@ -39,8 +39,9 @@ export function CompanionGuide() {
   const [isVisible, setIsVisible] = useState(false)
   const [arrivalSequence, setArrivalSequence] = useState(0)
   const guideRef = useRef<HTMLElement>(null)
-  const idleTimerRef = useRef<number | null>(null)
-  const firstArrivalRef = useRef(true)
+  const activeMarkerRef = useRef<HTMLElement | null>(null)
+  const frameRef = useRef<number | null>(null)
+  const dismissTimerRef = useRef<number | null>(null)
   const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
@@ -50,6 +51,12 @@ export function CompanionGuide() {
 
     const settleAtSection = () => {
       const selected = getClosestVisibleMarker(markers)
+
+      if (selected === activeMarkerRef.current) {
+        return
+      }
+
+      activeMarkerRef.current = selected ?? null
 
       if (!selected) {
         setIsVisible(false)
@@ -63,21 +70,28 @@ export function CompanionGuide() {
       setIsCloudOpen(true)
       setIsVisible(true)
       setArrivalSequence((sequence) => sequence + 1)
+
+      if (dismissTimerRef.current !== null) window.clearTimeout(dismissTimerRef.current)
+      dismissTimerRef.current = window.setTimeout(() => setIsVisible(false), 3200)
     }
 
-    const onScroll = () => {
-      if (idleTimerRef.current !== null) window.clearTimeout(idleTimerRef.current)
-      idleTimerRef.current = window.setTimeout(settleAtSection, prefersReducedMotion ? 0 : 180)
+    const scheduleSettle = () => {
+      if (frameRef.current !== null) window.cancelAnimationFrame(frameRef.current)
+      frameRef.current = window.requestAnimationFrame(() => {
+        frameRef.current = null
+        settleAtSection()
+      })
     }
 
     settleAtSection()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', settleAtSection)
+    window.addEventListener('scroll', scheduleSettle, { passive: true })
+    window.addEventListener('resize', scheduleSettle)
 
     return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', settleAtSection)
-      if (idleTimerRef.current !== null) window.clearTimeout(idleTimerRef.current)
+      window.removeEventListener('scroll', scheduleSettle)
+      window.removeEventListener('resize', scheduleSettle)
+      if (frameRef.current !== null) window.cancelAnimationFrame(frameRef.current)
+      if (dismissTimerRef.current !== null) window.clearTimeout(dismissTimerRef.current)
     }
   }, [prefersReducedMotion])
 
@@ -87,22 +101,14 @@ export function CompanionGuide() {
     const button = guideRef.current?.querySelector<HTMLElement>('.companion-guide__button')
     if (!button) return
 
-    const origin = document.querySelector<HTMLElement>('[data-companion-origin] .brand-mark')
-    const guideRect = guideRef.current?.getBoundingClientRect()
-    const originRect = origin?.getBoundingClientRect()
-    const startsAtLogo = firstArrivalRef.current && originRect && guideRect
-    const offsetX = startsAtLogo ? originRect.left + originRect.width / 2 - (guideRect.left + guideRect.width / 2) : 0
-    const offsetY = startsAtLogo ? originRect.top + originRect.height / 2 - (guideRect.top + guideRect.height / 2) : -34
-
-    firstArrivalRef.current = false
     button.getAnimations().forEach((animation) => animation.cancel())
     button.animate(
       [
-        { transform: `translate(${offsetX}px, ${offsetY}px) scale(.78)` },
-        { offset: 0.58, transform: 'translate(0, 8px) scale(1.04)' },
-        { transform: 'translate(0, 0) scale(1)' },
+        { transform: 'translate3d(0, -14px, 0) scale(.94)' },
+        { offset: 0.58, transform: 'translate3d(0, 4px, 0) scale(1.02)' },
+        { transform: 'translate3d(0, 0, 0) scale(1)' },
       ],
-      { duration: startsAtLogo ? 920 : 680, easing: 'cubic-bezier(.2,.8,.25,1)', fill: 'both' },
+      { duration: 520, easing: 'cubic-bezier(.2,.8,.25,1)', fill: 'both' },
     )
   }, [arrivalSequence, isVisible, message.state, prefersReducedMotion])
 
@@ -125,9 +131,8 @@ export function CompanionGuide() {
       >
         <span className="companion-guide__cloud">
           <svg aria-hidden="true" className="companion-guide__cloud-shape" preserveAspectRatio="none" viewBox="0 0 240 112">
-            <path d="M45 100C20 100 5 86 5 65c0-18 13-32 34-35C46 13 63 4 82 8c11-5 23-7 35-4 15 3 27 13 33 26 8-7 19-11 31-9 19 3 31 17 31 34 14 5 22 17 22 31 0 18-15 27-35 27H45Z" />
+            <path d="M28 84C12 79 6 68 11 56c4-10 15-17 28-18C37 26 48 16 62 16c7-8 18-12 29-7 9-9 22-14 35-9 12-7 28-4 36 8 8-4 17-3 24 2 8 5 12 12 13 21 15 2 26 12 27 25 2 13-8 24-22 28-7 2-13 2-19 1-7-1-11 5-18 8-11 5-18-3-28-2-11 1-16 9-27 9-12 0-16-8-27-9-10-1-16 7-27 4-8-2-11-10-19-11-5 0-9 0-11-1Z" />
           </svg>
-          <span aria-hidden="true" className="companion-guide__cloud-lobes"><i /><i /><i /></span>
           <span className="companion-guide__cloud-text">{message.cloud}</span>
           <span aria-hidden="true" className="companion-guide__cloud-trail"><i /><i /></span>
         </span>

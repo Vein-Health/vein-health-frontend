@@ -19,10 +19,10 @@ export function CompanionAvatar({ className = '', containerRef }: CompanionAvata
       <img
         alt=""
         decoding="async"
-        height="1375"
+        height="1371"
         onLoad={() => setIsLoaded(true)}
-        src="/assets/landing/vee-companion-full.jpeg"
-        width="1156"
+        src="/assets/landing/vee-companion-full.png"
+        width="1148"
       />
     </span>
   )

@@ -41,7 +41,7 @@ describe('new landing page', () => {
     expect(screen.queryByText('Pro')).not.toBeInTheDocument()
     expect(container.querySelector('.companion-guide')).toBeInTheDocument()
     expect(container.querySelector('.feature-carousel')).not.toBeInTheDocument()
-    expect(container.querySelector('img[src="/assets/landing/vee-companion-full.jpeg"]')).toBeInTheDocument()
+    expect(container.querySelector('img[src="/assets/landing/vee-companion-full.png"]')).toBeInTheDocument()
     expect(container.querySelector('.phone-frame')).not.toBeInTheDocument()
     expect(container.querySelector('.medication-preview')).not.toBeInTheDocument()
     expect(container.querySelector('.timeline-preview')).not.toBeInTheDocument()
