@@ -60,6 +60,12 @@ export function WaitlistPage() {
         iframe.remove()
         submissionForm.remove()
       }, 10_000)
+
+      // Keep the optimistic loading state long enough to give the submission a
+      // clear visual handoff before revealing the confirmation state.
+      await new Promise<void>((resolve) => {
+        window.setTimeout(resolve, 500)
+      })
       setSubmissionState('success')
     } catch {
       setSubmissionState('error')
@@ -107,6 +113,11 @@ export function WaitlistPage() {
                 <button className="button button--primary" disabled={submissionState === 'submitting'} type="submit">
                   {submissionState === 'submitting' ? 'Joining…' : 'Join waitlist'}
                 </button>
+                {submissionState === 'submitting' ? (
+                  <span aria-label="Joining the waitlist" className="waitlist-progress" role="progressbar">
+                    <span className="waitlist-progress__fill" />
+                  </span>
+                ) : null}
               </form>
               {submissionState === 'error' ? <p className="waitlist-form__message" role="alert">{errorMessage}</p> : null}
             </>

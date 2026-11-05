@@ -380,8 +380,8 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
 .waitlist-main { width: min(1180px, calc(100% - 2rem)); min-height: 48rem; margin: 0 auto; padding: clamp(8rem, 15vw, 12rem) 0 clamp(5rem, 10vw, 8rem); }
 .waitlist-card { width: min(100%, 48rem); margin: 0 auto; padding: clamp(2rem, 6vw, 5rem); border: 1px solid rgb(255 255 255 / 82%); border-radius: 2.5rem; background: rgb(255 255 255 / 84%); box-shadow: var(--shadow); backdrop-filter: blur(18px); text-align: center; }
 .waitlist-card .eyebrow { margin-bottom: 1.25rem; }
-.waitlist-card h1 { max-width: 15ch; margin: 0 auto; color: var(--ink); font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 800; letter-spacing: -.07em; line-height: 1.02; }
-.waitlist-card > p { max-width: 38rem; margin: 1.5rem auto 0; color: var(--slate); font-size: clamp(.92rem, 1.5vw, 1.05rem); line-height: 1.6; }
+.waitlist-card h1 { max-width: 15ch; margin: 0 auto; color: var(--ink); font-size: clamp(1.8rem, 3.6vw, 2.75rem); font-weight: 800; letter-spacing: -.06em; line-height: 1.05; }
+.waitlist-card > p { max-width: 38rem; margin: 1.25rem auto 0; color: var(--slate); font-size: clamp(.88rem, 1.3vw, 1rem); line-height: 1.55; }
 .waitlist-perk { display: inline-flex; margin: 2rem auto 0; padding: .75rem 1.1rem; border: 1px solid #bfdbfe; border-radius: 999px; background: var(--pale-blue); color: var(--blue-deep); font-size: .9rem; font-weight: 800; }
 .waitlist-form { display: flex; max-width: 34rem; align-items: stretch; gap: .65rem; margin: 2rem auto 0; text-align: left; }
 .waitlist-form label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -389,16 +389,19 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
 .waitlist-form input:focus { border-color: #71a1ff; box-shadow: 0 0 0 4px rgb(113 161 255 / 18%); }
 .waitlist-form .button { border: 0; cursor: pointer; white-space: nowrap; }
 .waitlist-form .button:disabled { cursor: wait; opacity: .65; }
+.waitlist-progress { flex: 0 0 100%; height: .25rem; margin-top: .15rem; overflow: hidden; border-radius: 999px; background: #dbeafe; }
+.waitlist-progress__fill { display: block; width: 100%; height: 100%; border-radius: inherit; background: var(--blue); transform-origin: left; animation: waitlist-progress-fill 500ms cubic-bezier(.2,.8,.2,1) both; }
 .waitlist-form__message { margin: 1rem 0 0; color: #b42318; font-size: .9rem; text-align: center; }
 .waitlist-success { display: grid; justify-items: center; gap: .75rem; }
 .waitlist-success__icon { display: grid; width: 7rem; height: 7rem; place-items: center; border-radius: 50%; background: var(--blue); box-shadow: 0 20px 45px rgb(37 99 235 / 30%); color: #fff; animation: waitlist-success-pop 460ms cubic-bezier(.2,.8,.2,1) both; }
 .waitlist-success__icon svg { width: 3.5rem; height: 3.5rem; stroke-width: 3; }
-.waitlist-success h2 { margin: .75rem 0 0; font-size: clamp(1.75rem, 3.6vw, 2.8rem); letter-spacing: -.06em; }
-.waitlist-success p { max-width: 32rem; margin: 0; color: var(--slate); line-height: 1.65; }
+.waitlist-success h1 { max-width: 13ch; margin: .75rem 0 0; font-size: clamp(1.65rem, 3.1vw, 2.4rem); letter-spacing: -.06em; }
+.waitlist-success p { max-width: 30rem; margin: 0; color: var(--slate); font-size: .95rem; line-height: 1.55; }
 @keyframes waitlist-success-pop { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: scale(1); } }
+@keyframes waitlist-progress-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @media (max-width: 720px) {
-  .waitlist-card h1 { font-size: clamp(1.9rem, 9vw, 2.8rem); }
-  .waitlist-success h2 { font-size: clamp(1.6rem, 8vw, 2.2rem); }
+  .waitlist-card h1 { font-size: clamp(1.65rem, 7vw, 2.25rem); }
+  .waitlist-success h1 { font-size: clamp(1.5rem, 6.5vw, 2rem); }
 }
 
 /* Section companion restored from the original waypoint interaction. It stays at the edge so it never covers the reading flow. */
