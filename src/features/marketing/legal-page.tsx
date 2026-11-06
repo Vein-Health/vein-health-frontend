@@ -3,10 +3,11 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 
 import { cookiesPage, privacyPage, refundPage, termsPage, type LegalPageContent } from './legal-content'
 import { ContourField } from './components/contour-field'
+import { PageMetadata } from './components/page-metadata'
 import { PublicFooter } from './components/public-footer'
 import { PublicHeader } from './components/public-header'
 
-export function LegalPage({ intro, notice, sections, title, updated }: LegalPageContent) {
+export function LegalPage({ intro, notice, path, sections, seoDescription, seoTitle, title, updated }: LegalPageContent) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id ?? '')
   const navigationTargetRef = useRef('')
   const navigationTargetReachedRef = useRef(false)
@@ -71,6 +72,7 @@ export function LegalPage({ intro, notice, sections, title, updated }: LegalPage
 
   return (
     <div className="legal-page" id="top">
+      <PageMetadata description={seoDescription} path={path} title={seoTitle} />
       <ContourField />
       <PublicHeader />
 
@@ -148,12 +150,18 @@ export function CookiesPage() {
 interface DeferredPageProps {
   children: ReactNode
   id?: string
+  metadata?: {
+    description: string
+    path: string
+    title: string
+  }
   title: string
 }
 
-function DeferredPage({ children, id, title }: DeferredPageProps) {
+function DeferredPage({ children, id, metadata, title }: DeferredPageProps) {
   return (
     <div className="legal-page" id="top">
+      {metadata ? <PageMetadata {...metadata} /> : null}
       <ContourField />
       <PublicHeader />
       <main className="deferred-page" id="deferred-main">
@@ -176,7 +184,14 @@ export function RefundPage() {
 
 export function SupportPage() {
   return (
-    <DeferredPage title="Support">
+    <DeferredPage
+      metadata={{
+        description: 'Get support for Vein Health, find the official support email, and learn what information not to send through general email.',
+        path: '/support',
+        title: 'Support | Vein Health',
+      }}
+      title="Support"
+    >
       <p>For general support questions, email <a href="mailto:support@veinhealth.co">support@veinhealth.co</a>.</p>
       <p>Do not send sensitive health documents, medication details, symptoms, identity documents, passwords, or payment information through a general email until the final support workflow is published.</p>
       <p>Store listing IDs will replace the current official store-search destinations when the approved listings are published.</p>

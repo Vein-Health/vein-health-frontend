@@ -315,7 +315,6 @@ function ClosingCta() {
       <h2 id="closing-heading">Your health, easier to understand.</h2>
       <p>Scan your health information, stay organized, and keep track of what matters.</p>
       <a className="button button--primary" href="/waitlist">Join waitlist</a>
-      <span>Start with <strong>3 days free.</strong></span>
     </section>
   )
 }

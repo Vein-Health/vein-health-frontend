@@ -8,7 +8,10 @@ export interface LegalSection {
 export interface LegalPageContent {
   intro: string
   notice: string
+  path: string
   sections: readonly LegalSection[]
+  seoDescription: string
+  seoTitle: string
   title: string
   updated: string
 }
@@ -16,6 +19,9 @@ export interface LegalPageContent {
 const updated = '5 November 2026'
 
 export const privacyPage: LegalPageContent = {
+  path: '/privacy',
+  seoTitle: 'Privacy Policy | Vein Health',
+  seoDescription: 'Read Vein Health\'s Privacy Policy to learn how Averon Technologies Ltd. collects, uses, protects, and deletes personal and health information.',
   title: 'Privacy Policy',
   updated,
   intro: 'Vein Health respects your privacy and is committed to protecting your personal and health information. This policy explains what we collect, how we use it, who we share it with, how we protect it, and how you can exercise your rights.',
@@ -39,6 +45,9 @@ export const privacyPage: LegalPageContent = {
 }
 
 export const termsPage: LegalPageContent = {
+  path: '/terms',
+  seoTitle: 'Terms and Conditions | Vein Health',
+  seoDescription: 'Review the Vein Health Terms and Conditions governing accounts, subscriptions, acceptable use, health-information boundaries, and your rights.',
   title: 'Terms and Conditions',
   updated,
   intro: 'These Terms of Service govern your access to and use of the Vein Health mobile application and website. By creating an account or using Vein Health, you agree to these Terms and our Privacy Policy.',
@@ -69,6 +78,9 @@ export const termsPage: LegalPageContent = {
 }
 
 export const refundPage: LegalPageContent = {
+  path: '/refund',
+  seoTitle: 'Refund Policy | Vein Health',
+  seoDescription: 'Learn how Vein Health subscription refunds and cancellations work through Apple App Store, Google Play, and applicable consumer law.',
   title: 'Refund Policy',
   updated,
   intro: 'This Refund Policy explains how subscriptions, cancellations, and refund requests work for Vein Health. Vein Health offers premium subscriptions through Apple App Store and Google Play Store.',
@@ -89,6 +101,9 @@ export const refundPage: LegalPageContent = {
 }
 
 export const cookiesPage: LegalPageContent = {
+  path: '/cookies',
+  seoTitle: 'Cookie Policy | Vein Health',
+  seoDescription: 'Learn how Vein Health uses cookies and similar technologies, which are necessary, and how you can control optional technologies.',
   title: 'Cookie Policy',
   updated,
   intro: 'This Cookie Policy explains how Vein Health uses cookies and similar technologies on https://veinhealth.co. It describes what they do and how you can control optional uses.',

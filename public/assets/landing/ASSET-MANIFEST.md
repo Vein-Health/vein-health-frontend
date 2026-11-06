@@ -10,6 +10,7 @@ These runtime assets were copied into the frontend repository on 2026-11-01 from
 | `understand-organized.webp` | Approved explanation visual from the design drop | Understand-and-stay-organized section visual |
 | `share-with-doctor.webp` | Approved BEAT visual from the design drop | BEAT controlled-sharing visual |
 | `vee-bold.webp` | Canonical head-only owl from the mobile branding source | Canonical owl for the header, section marks, favicon, and preload screen |
+| `vein-health-favicon-192.png` | 192px transparent derivative of the canonical head-only owl | Google-compatible square favicon and Apple touch icon |
 | `vee-companion-full.webp` | Transparent-background derivative of the supplied companion reference | Non-blocking section companion guide only; not used as the header mark or intro loader |
 | `phone-flow-full.webp` | Stitched full-height visual from the approved screenshot sequence | Full two-phone scan-to-understand bridge visual; capture chrome and disclaimer excluded |
 | `medication-schedule-reference.webp` | Approved medication schedule product-preview visual | Medication schedule product-preview visual; capture chrome excluded |
