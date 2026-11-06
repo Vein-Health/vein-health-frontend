@@ -54,7 +54,7 @@ button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
 .contour-field__shape--top-right { top: 7%; right: -1.25rem; transform: rotate(-8deg); }
 .contour-field__shape--middle-left { top: 47%; left: -1.25rem; transform: rotate(9deg) scaleX(-1); }
 .contour-field__shape--lower-right { top: 82%; right: -1.5rem; transform: rotate(-6deg); }
-.landing-page > :not(.contour-field):not(.app-intro), .legal-page > :not(.contour-field):not(.app-intro), .waitlist-page > :not(.contour-field):not(.app-intro) { position: relative; z-index: 1; }
+.landing-page > :not(.contour-field):not(.app-intro):not(.public-header), .legal-page > :not(.contour-field):not(.app-intro):not(.public-header), .waitlist-page > :not(.contour-field):not(.app-intro):not(.public-header) { position: relative; z-index: 1; }
 
 .app-intro {
   position: fixed;
