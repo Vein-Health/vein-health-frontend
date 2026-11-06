@@ -4,8 +4,8 @@ test('the public landing page renders the corrected section flow', async ({ page
   await page.goto('/')
 
   await expect(page).toHaveTitle('Vein Health | AI Companion to Understand & Organize Your Care')
-  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/assets/landing/vein-health-favicon-192.png')
-  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('sizes', '192x192')
+  await expect(page.locator('link[rel="icon"][type="image/png"]')).toHaveAttribute('href', '/assets/landing/vein-health-favicon-192.png')
+  await expect(page.locator('link[rel="icon"][type="image/png"]')).toHaveAttribute('sizes', '192x192')
   await expect(page.getByText('Start with 3 days free.')).toHaveCount(0)
   await expect(page.getByRole('heading', { level: 1, name: /Understanding your health/i })).toBeAttached()
   await expect(page.getByRole('heading', { name: 'How Vein Health works' })).toBeVisible()
