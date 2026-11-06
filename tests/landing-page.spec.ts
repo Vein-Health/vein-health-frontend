@@ -43,9 +43,15 @@ test('the narrow layout provides an accessible menu and keeps the hero image loa
   await page.goto('/')
 
   await expect(page.locator('.hero-art img')).toBeVisible()
+  await expect(page.locator('.public-header')).toHaveCSS('position', 'sticky')
   await expect
     .poll(() => page.locator('.hero-art img').evaluate((image) => image.naturalWidth), { timeout: 60_000 })
     .toBeGreaterThan(0)
+
+  await page.evaluate(() => window.scrollTo(0, 500))
+  await expect
+    .poll(() => page.locator('.public-header').evaluate((header) => header.getBoundingClientRect().top), { timeout: 5_000 })
+    .toBeLessThan(30)
 
   const menu = page.getByRole('button', { name: 'Open navigation menu' })
   await menu.click()
