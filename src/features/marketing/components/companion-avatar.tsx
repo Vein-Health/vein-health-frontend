@@ -21,7 +21,7 @@ export function CompanionAvatar({ className = '', containerRef }: CompanionAvata
         decoding="async"
         height="1371"
         onLoad={() => setIsLoaded(true)}
-        src="/assets/landing/vee-companion-full.png"
+        src="/assets/landing/vee-companion-full.webp"
         width="1148"
       />
     </span>

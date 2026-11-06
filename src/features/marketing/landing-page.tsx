@@ -83,7 +83,7 @@ function HeroSection() {
           alt="A family sharing a warm moment in a flower-filled meadow"
           height={941}
           loading="eager"
-          src="/assets/landing/hero-family.png"
+          src="/assets/landing/hero-family.webp"
           width={1672}
         />
         <div className="hero-copy">
@@ -105,7 +105,7 @@ function HowItWorksSection() {
       <SectionHeader id="how-it-works-heading" title="How Vein Health works" />
       <p className="section-lede">Upload your health information, review the details, and get clear explanations that help you stay organized.</p>
       <div className="split-section split-section--scan">
-        <ReferenceMedia alt="A woman photographing a health document with her phone" src="/assets/landing/scan-documents.png" />
+        <ReferenceMedia alt="A woman photographing a health document with her phone" src="/assets/landing/scan-documents.webp" />
         <div className="split-section__copy">
           <SectionTitle title="Scan your health documents" />
           <p>Take a photo or upload a prescription, lab result, or health document. Vee pulls out the important details for you.</p>
@@ -126,7 +126,7 @@ function ReviewSection() {
           <p>See what Vee found and check anything that needs your attention. Nothing is saved until you confirm it.</p>
           <ReferenceAccordion items={reviewQuestions} />
         </div>
-        <ReferenceMedia alt="A man reviewing health information on his phone" src="/assets/landing/review-verify.png" />
+        <ReferenceMedia alt="A man reviewing health information on his phone" src="/assets/landing/review-verify.webp" />
       </div>
     </section>
   )
@@ -137,7 +137,7 @@ function UnderstandSection() {
     <section aria-labelledby="understand-heading" className="landing-section landing-section--tight">
       <CompanionWaypoint cloud="Clear explanations can make the next conversation easier." state="understand" />
       <div className="split-section split-section--understand">
-        <ReferenceMedia alt="A person reviewing a lab report beside a phone explanation preview" src="/assets/landing/understand-organized.png" />
+        <ReferenceMedia alt="A person reviewing a lab report beside a phone explanation preview" src="/assets/landing/understand-organized.webp" />
         <div className="split-section__copy">
           <SectionTitle id="understand-heading" title="Understand and stay organized" />
           <p>Upload your health documents and get clear, easy-to-understand explanations of your results. Vee highlights important findings, explains what they mean, and helps you know what to discuss with your doctor.</p>
@@ -158,7 +158,7 @@ function ProductBridgeSection() {
         alt="Approved sample visual showing a lab report scanned on one phone and explained on another"
         className="reference-preview--phones"
         height={882}
-        src="/assets/landing/phone-flow-full.png"
+        src="/assets/landing/phone-flow-full.webp"
         width={1220}
       />
       <p className="preview-disclaimer">Sample product preview. Vein Health explains your records. It does not diagnose or treat.</p>
@@ -219,7 +219,7 @@ function MedicationSection() {
           alt="Approved sample medication schedule visual"
           className="reference-preview--schedule"
           height={810}
-          src="/assets/landing/medication-schedule-reference.png"
+          src="/assets/landing/medication-schedule-reference.webp"
           width={1020}
         />
         <div className="split-section__copy">
@@ -245,7 +245,7 @@ function TimelineSection() {
           alt="Approved sample health timeline visual"
           className="reference-preview--timeline"
           height={800}
-          src="/assets/landing/health-timeline-reference.png"
+          src="/assets/landing/health-timeline-reference.webp"
           width={1030}
         />
       </div>
@@ -262,7 +262,7 @@ function SafetySection() {
           alt="Approved sample safety guidance visual"
           className="reference-preview--safety"
           height={760}
-          src="/assets/landing/safety-reference.png"
+          src="/assets/landing/safety-reference.webp"
           width={1030}
         />
         <div className="split-section__copy">
@@ -282,7 +282,7 @@ function BeatSection() {
       <SectionHeader id="beat-heading" title="Share your health information with someone you trust." />
       <p className="section-lede">Choose what they can see. Stay connected without explaining everything.</p>
       <div className="beat-section__media">
-        <OptimizedImage alt="BEAT demonstration showing selected health items shared with a trusted person" height={1086} loading="lazy" src="/assets/landing/share-with-doctor.png" width={1448} />
+        <OptimizedImage alt="BEAT demonstration showing selected health items shared with a trusted person" height={1086} loading="lazy" src="/assets/landing/share-with-doctor.webp" width={1448} />
       </div>
       <p className="beat-section__note">You choose the items shared. Sharing is controlled and revocable; a full account is not copied automatically.</p>
     </section>
@@ -353,12 +353,5 @@ function ReferencePreview({ alt, className, height, src, width }: { alt: string;
 }
 
 function OptimizedImage({ alt, height, loading, src, width }: { alt: string; height: number; loading: 'eager' | 'lazy'; src: string; width: number }) {
-  const webpSrc = src.replace(/\.png$/i, '.webp')
-
-  return (
-    <picture>
-      <source srcSet={webpSrc} type="image/webp" />
-      <img alt={alt} decoding="async" height={height} loading={loading} src={src} width={width} />
-    </picture>
-  )
+  return <img alt={alt} decoding="async" height={height} loading={loading} src={src} width={width} />
 }
