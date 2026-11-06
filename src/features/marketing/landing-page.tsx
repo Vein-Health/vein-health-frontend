@@ -79,12 +79,12 @@ function HeroSection() {
   return (
     <section aria-labelledby="hero-heading" className="hero-section">
       <figure className="hero-art">
-        <img
+        <OptimizedImage
           alt="A family sharing a warm moment in a flower-filled meadow"
-          height="941"
+          height={941}
           loading="eager"
           src="/assets/landing/hero-family.png"
-          width="1672"
+          width={1672}
         />
         <div className="hero-copy">
           <h1 id="hero-heading">Understanding your health shouldn't feel impossible.</h1>
@@ -282,7 +282,7 @@ function BeatSection() {
       <SectionHeader id="beat-heading" title="Share your health information with someone you trust." />
       <p className="section-lede">Choose what they can see. Stay connected without explaining everything.</p>
       <div className="beat-section__media">
-        <img alt="BEAT demonstration showing selected health items shared with a trusted person" height="1086" src="/assets/landing/share-with-doctor.png" width="1448" />
+        <OptimizedImage alt="BEAT demonstration showing selected health items shared with a trusted person" height={1086} loading="lazy" src="/assets/landing/share-with-doctor.png" width={1448} />
       </div>
       <p className="beat-section__note">You choose the items shared. Sharing is controlled and revocable; a full account is not copied automatically.</p>
     </section>
@@ -339,7 +339,7 @@ function CompanionWaypoint({ cloud, state }: { cloud: string; state: import('./t
 function ReferenceMedia({ alt, src }: { alt: string; src: string }) {
   return (
     <figure className="reference-media">
-      <img alt={alt} height="1040" loading="lazy" src={src} width="1014" />
+      <OptimizedImage alt={alt} height={1040} loading="lazy" src={src} width={1014} />
     </figure>
   )
 }
@@ -347,7 +347,18 @@ function ReferenceMedia({ alt, src }: { alt: string; src: string }) {
 function ReferencePreview({ alt, className, height, src, width }: { alt: string; className: string; height: number; src: string; width: number }) {
   return (
     <figure className={`reference-preview ${className}`}>
-      <img alt={alt} height={height} loading="lazy" src={src} width={width} />
+      <OptimizedImage alt={alt} height={height} loading="lazy" src={src} width={width} />
     </figure>
+  )
+}
+
+function OptimizedImage({ alt, height, loading, src, width }: { alt: string; height: number; loading: 'eager' | 'lazy'; src: string; width: number }) {
+  const webpSrc = src.replace(/\.png$/i, '.webp')
+
+  return (
+    <picture>
+      <source srcSet={webpSrc} type="image/webp" />
+      <img alt={alt} decoding="async" height={height} loading={loading} src={src} width={width} />
+    </picture>
   )
 }

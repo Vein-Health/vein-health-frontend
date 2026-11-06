@@ -18,4 +18,8 @@ These runtime assets were copied into the frontend repository on 2026-11-01 from
 
 The hero uses a clean image with semantic DOM text and controls, so the page does not depend on baked-in copy or the old Meet Vee card. Store links currently open official store searches until final app listing IDs are supplied.
 
+## Local optimization test
+
+On 2026-11-06, same-resolution `.webp` copies were generated beside the approved PNG sources using `scripts/optimize-landing-images.py`. The landing page prefers WebP through `<picture>` with the original PNG as a fallback. The PNGs are intentionally retained during visual review so this change can be reverted without recovering source assets. The WebP copies preserve RGBA transparency; `vee-bold.webp` remains lossless to protect the approved owl edges and transparent background.
+
 The `phone-flow-full.png` file is assembled from the supplied approved screenshot sequence so the complete phone illustration is visible. The raw screenshots in `new\reference` remain untouched.

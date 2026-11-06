@@ -14,13 +14,10 @@ export function BrandMark({ eager = false, label, size = 36 }: BrandMarkProps) {
       role={label ? 'img' : undefined}
       style={{ '--brand-mark-size': `${size}px` } as CSSProperties}
     >
-      <img
-        alt=""
-        decoding="async"
-        height={size}
-        src="/assets/landing/vee-bold.png"
-        width={size}
-      />
+      <picture>
+        <source srcSet="/assets/landing/vee-bold.webp" type="image/webp" />
+        <img alt="" decoding="async" height={size} src="/assets/landing/vee-bold.png" width={size} />
+      </picture>
     </span>
   )
 }
